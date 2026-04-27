@@ -129,8 +129,14 @@
   .company-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);border-color:var(--grey-border2);}
   .company-card.drag-source{opacity:.12;}
   .company-card.dragging{opacity:.08;cursor:grabbing;transform:scale(.96);}
-  .drag-placeholder{border:2.5px dashed var(--bleu4);border-radius:8px;background:var(--bleu1);min-height:80px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
-  .drag-placeholder::after{content:"Déposer ici";font-size:11px;font-weight:600;color:var(--bleu4);letter-spacing:.04em;}
+  .drag-placeholder{border-radius:8px;min-height:80px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2.5px dashed var(--bleu4);background:var(--bleu1);}
+  .drag-placeholder::after{content:"Déposer ici";font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--bleu4);}
+  .seg-direct   .drag-placeholder{border-color:var(--bleu4);background:var(--bleu1);}
+  .seg-direct   .drag-placeholder::after{color:var(--bleu4);}
+  .seg-connexe  .drag-placeholder{border-color:var(--violet4);background:var(--violet1);}
+  .seg-connexe  .drag-placeholder::after{color:var(--violet4);}
+  .seg-ouverture .drag-placeholder{border-color:var(--beige4);background:var(--beige1);}
+  .seg-ouverture .drag-placeholder::after{color:var(--beige4);}
   .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:82px;margin-bottom:4px;line-height:1.3;}
   .card-reason{font-size:12px;color:var(--dark-grey);line-height:1.6;font-weight:400;}
   .card-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .12s;}
@@ -168,6 +174,19 @@
   /* FOOTER */
   .app-footer{background:var(--blanc);border-top:1.5px solid var(--grey-border1);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
   .footer-hint{font-size:11px;color:var(--grey);}
+  /* Modale confirmation reset */
+  .confirm-modal-bg{display:none;position:fixed;inset:0;background:rgba(45,50,62,.4);z-index:400;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
+  .confirm-modal-bg.open{display:flex;}
+  .confirm-modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
+  .confirm-modal h3{font-size:15px;font-weight:700;color:var(--noir);margin-bottom:8px;}
+  .confirm-modal p{font-size:12px;color:var(--grey);line-height:1.6;margin-bottom:24px;}
+  .confirm-modal-btns{display:flex;flex-direction:column;gap:8px;}
+  .btn-export-reset{background:var(--noir-bouton);color:var(--blanc);border:none;border-radius:8px;padding:11px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;text-align:left;display:flex;align-items:center;gap:8px;transition:opacity .15s;}
+  .btn-export-reset:hover{opacity:.82;}
+  .btn-reset-only{background:transparent;color:var(--dark-grey);border:1.5px solid var(--grey-border1);border-radius:8px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:left;transition:border-color .15s,color .15s;}
+  .btn-reset-only:hover{border-color:var(--grey);color:var(--noir);}
+  .btn-cancel-reset{background:transparent;color:var(--grey);border:none;border-radius:8px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:center;transition:color .15s;}
+  .btn-cancel-reset:hover{color:var(--noir);}
 
 
   /* ── ÉTOILE PRIORITAIRE ── */
@@ -425,6 +444,22 @@
   </div>
 </div>
 
+<!-- MODALE CONFIRMATION NOUVEAU PLAN -->
+<div class="confirm-modal-bg" id="confirm-reset-modal">
+  <div class="confirm-modal">
+    <h3>Nouveau plan de chasse</h3>
+    <p>Le plan en cours sera effacé. Pense à exporter le JSON si tu veux le conserver.</p>
+    <div class="confirm-modal-btns">
+      <button class="btn-export-reset" onclick="exportThenReset()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Exporter le JSON puis continuer
+      </button>
+      <button class="btn-reset-only" onclick="confirmReset()">Continuer sans exporter</button>
+      <button class="btn-cancel-reset" onclick="closeConfirmReset()">Annuler</button>
+    </div>
+  </div>
+</div>
+
 <!-- EXPORT TEXTE MODAL -->
 <div class="export-modal-bg" id="export-modal">
   <div class="export-modal">
@@ -502,8 +537,24 @@ function showApp(){
   document.getElementById('header-client').textContent = state.clientName || '—';
   document.getElementById('header-poste').textContent  = [state.jobTitle, state.location].filter(Boolean).join(' · ') || '—';
   renderAll();
+  saveLocal();
 }
 function resetToImport(){
+  document.getElementById('confirm-reset-modal').classList.add('open');
+}
+function closeConfirmReset(){
+  document.getElementById('confirm-reset-modal').classList.remove('open');
+}
+function exportThenReset(){
+  exportJSON();
+  closeConfirmReset();
+  doReset();
+}
+function confirmReset(){
+  closeConfirmReset();
+  doReset();
+}
+function doReset(){
   localStorage.removeItem(STORAGE_KEY);
   state={jobTitle:'',clientName:'',location:'',companies:[]};
   npcList=[];
