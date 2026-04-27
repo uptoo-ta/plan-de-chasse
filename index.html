@@ -672,26 +672,8 @@ function openExportTexte(){
 function closeExportModal(){ document.getElementById('export-modal').classList.remove('open'); }
 function copyExport(){
   const ta = document.getElementById('export-content');
-  const plain = ta.value;
-  // Construire version HTML riche : les lignes "Cible X : ..." en gras
-  const html = plain.split('\n').map(line=>{
-    if(/^Cible \d+\s*:/.test(line) || /^Entreprises où ne pas chasser/.test(line)){
-      return `<strong>${esc(line)}</strong>`;
-    }
-    return esc(line) || '&nbsp;';
-  }).join('<br>');
-
-  try{
-    const item = new ClipboardItem({
-      'text/plain': new Blob([plain], {type:'text/plain'}),
-      'text/html':  new Blob([`<p>${html}</p>`], {type:'text/html'})
-    });
-    navigator.clipboard.write([item]);
-  } catch(e){
-    // Fallback texte brut
-    ta.select();
-    document.execCommand('copy');
-  }
+  ta.select();
+  document.execCommand('copy');
   const ok = document.getElementById('copy-ok');
   ok.classList.add('show');
   setTimeout(()=>ok.classList.remove('show'),2000);
