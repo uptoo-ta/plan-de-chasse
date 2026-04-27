@@ -127,6 +127,7 @@
   .company-card{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;cursor:grab;transition:box-shadow .15s,border-color .15s;position:relative;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
   .company-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);border-color:var(--grey-border2);}
+  .company-card.drag-source{opacity:.12;}
   .company-card.dragging{opacity:.08;cursor:grabbing;transform:scale(.96);}
   .drag-placeholder{border:2.5px dashed var(--bleu4);border-radius:8px;background:var(--bleu1);min-height:80px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
   .drag-placeholder::after{content:"Déposer ici";font-size:11px;font-weight:600;color:var(--bleu4);letter-spacing:.04em;}
@@ -362,7 +363,7 @@
     <div class="kanban-board" id="kanban-board">
 
       <!-- DIRECT -->
-      <div class="k-col seg-direct" id="col-Direct" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'Direct')">
+      <div class="k-col seg-direct" id="col-Direct" >
         <div class="col-head">
           <div class="col-tag">Cible 1</div>
           <div class="col-title-row">
@@ -375,7 +376,7 @@
       </div>
 
       <!-- CONNEXE -->
-      <div class="k-col seg-connexe" id="col-Connexe" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'Connexe')">
+      <div class="k-col seg-connexe" id="col-Connexe" >
         <div class="col-head">
           <div class="col-tag">Cible 2</div>
           <div class="col-title-row">
@@ -388,7 +389,7 @@
       </div>
 
       <!-- OUVERTURE -->
-      <div class="k-col seg-ouverture" id="col-Ouverture" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'Ouverture')">
+      <div class="k-col seg-ouverture" id="col-Ouverture" >
         <div class="col-head">
           <div class="col-tag">Cible 3</div>
           <div class="col-title-row">
@@ -515,7 +516,7 @@ function resetToImport(){
 }
 
 // ── RENDER ──
-function renderAll(){ ['Direct','Connexe','Ouverture'].forEach(renderCol); updateCount(); }
+function renderAll(){ ['Direct','Connexe','Ouverture'].forEach(renderCol); updateCount(); attachDragListeners(); }
 
 function renderCol(seg){
   const zone = document.getElementById('zone-'+seg);
@@ -532,10 +533,7 @@ function renderCol(seg){
     </div>
   </div>`;
   zone.innerHTML = html;
-  zone.querySelectorAll('.company-card').forEach(el=>{
-    el.addEventListener('dragstart', e=>onDragStart(e, parseInt(el.dataset.id)));
-    el.addEventListener('dragend',   ()=>onDragEnd(el));
-  });
+
   document.getElementById('counter-'+seg).textContent = cards.length;
 }
 
@@ -544,7 +542,7 @@ function cardHTML(c,i){
   const actionsClass = c.priority ? ' has-active' : '';
   const starBtnClass = c.priority ? ' active' : '';
   const starIcon = c.priority ? '★' : '☆';
-  return `<div class="company-card${priClass}" draggable="true" data-id="${c.id}" style="animation-delay:${i*.03}s">
+  return `<div class="company-card${priClass}" data-id="${c.id}">
     <div class="card-name">${esc(c.name)}</div>
     ${c.reason ? `<div class="card-reason">${esc(c.reason)}</div>` : ''}
     <div class="card-actions${actionsClass}">
@@ -600,125 +598,144 @@ function togglePriority(id){
 // ── DELETE ──
 function deleteCard(id){ state.companies=state.companies.filter(c=>c.id!==id); renderAll(); saveLocal(); }
 
-// ── DRAG (style Trello) ──
-// On lit la position du placeholder AU MOMENT du drop directement dans le DOM
-// pour éviter toute désynchronisation entre onDragOver et onDrop
+// ── DRAG (mouse-based, compatible Chromebook) ──
+let dragging = false;
+let dragCardId = null;
+let dragGhost = null;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
 
 function removePlaceholder(){
   document.querySelectorAll('.drag-placeholder').forEach(p=>p.remove());
-}
-
-function getPlaceholderPosition(){
-  // Retourne {seg, beforeId} en lisant le DOM au moment du drop
-  const ph = document.querySelector('.drag-placeholder');
-  if(!ph) return null;
-  const zone = ph.closest('.cards-zone');
-  if(!zone) return null;
-  const col = zone.closest('.k-col');
-  const seg = col ? col.id.replace('col-','') : null;
-  // La carte qui suit le placeholder
-  let next = ph.nextElementSibling;
-  while(next && !next.classList.contains('company-card')) next = next.nextElementSibling;
-  const beforeId = (next && !next.classList.contains('dragging')) ? parseInt(next.dataset.id) : null;
-  return { seg, beforeId };
 }
 
 function insertPlaceholder(zone, beforeEl){
   removePlaceholder();
   const ph = document.createElement('div');
   ph.className = 'drag-placeholder';
-  if(beforeEl){
-    zone.insertBefore(ph, beforeEl);
-  } else {
+  if(beforeEl) zone.insertBefore(ph, beforeEl);
+  else {
     const addBtn = zone.querySelector('.add-btn');
     if(addBtn) zone.insertBefore(ph, addBtn);
     else zone.appendChild(ph);
   }
 }
 
-function onDragStart(e,id){
-  dragId=id;
-  e.dataTransfer.effectAllowed='move';
-  setTimeout(()=>{
-    const el=document.querySelector(`[data-id="${id}"]`);
-    if(el) el.classList.add('dragging');
-  },0);
+function getSegFromPoint(x, y){
+  const cols = ['Direct','Connexe','Ouverture'];
+  for(const seg of cols){
+    const col = document.getElementById('col-'+seg);
+    if(!col) continue;
+    const r = col.getBoundingClientRect();
+    if(x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return seg;
+  }
+  return null;
 }
 
-function onDragEnd(el){
-  el.classList.remove('dragging');
-  document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
-  removePlaceholder();
-  dragId=null;
-}
-
-function onDragOver(e){
-  e.preventDefault();
-  const col = e.currentTarget;
-  col.classList.add('drag-over');
-  const zone = col.querySelector('.cards-zone');
-  if(!zone) return;
-
-  // Auto-scroll
-  const zRect = zone.getBoundingClientRect();
-  if(e.clientY < zRect.top + 60) zone.scrollTop -= 8;
-  else if(e.clientY > zRect.bottom - 60) zone.scrollTop += 8;
-
-  // Trouver la carte sous le curseur (ignorer la carte draggée)
-  const cards = [...zone.querySelectorAll('.company-card:not(.dragging)')];
-  let targetCard = null;
+function getInsertPosition(seg, y){
+  const zone = document.getElementById('zone-'+seg);
+  if(!zone) return null;
+  const cards = [...zone.querySelectorAll('.company-card:not(.drag-source)')];
   for(const card of cards){
     const r = card.getBoundingClientRect();
-    if(e.clientY < r.top + r.height / 2){ targetCard = card; break; }
+    if(y < r.top + r.height / 2) return { zone, beforeEl: card };
   }
-  insertPlaceholder(zone, targetCard);
+  return { zone, beforeEl: null };
 }
 
-function onDragLeave(e){
-  if(!e.currentTarget.contains(e.relatedTarget)){
-    e.currentTarget.classList.remove('drag-over');
-    // Ne pas supprimer le placeholder ici pour éviter le scintillement
-  }
+// Attacher les événements souris sur les cartes après chaque render
+function attachDragListeners(){
+  document.querySelectorAll('.company-card').forEach(card=>{
+    card.addEventListener('mousedown', onCardMouseDown);
+  });
 }
 
-function onDrop(e, seg){
+function onCardMouseDown(e){
+  // Ignorer si clic sur un bouton
+  if(e.target.closest('.card-actions')) return;
   e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
+  const card = e.currentTarget;
+  dragCardId = parseInt(card.dataset.id);
+  const r = card.getBoundingClientRect();
+  dragOffsetX = e.clientX - r.left;
+  dragOffsetY = e.clientY - r.top;
 
-  // Lire la position AVANT de supprimer le placeholder
-  const pos = getPlaceholderPosition();
+  // Créer le ghost
+  dragGhost = card.cloneNode(true);
+  dragGhost.style.cssText = `
+    position:fixed; z-index:9999; pointer-events:none;
+    width:${r.width}px; opacity:0.85;
+    left:${r.left}px; top:${r.top}px;
+    box-shadow:0 8px 24px rgba(0,0,0,.18);
+    border-radius:8px; transform:rotate(1.5deg);
+    transition:none;
+  `;
+  document.body.appendChild(dragGhost);
+  card.classList.add('drag-source');
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
+}
+
+function onMouseMove(e){
+  if(!dragGhost) return;
+  dragGhost.style.left = (e.clientX - dragOffsetX) + 'px';
+  dragGhost.style.top  = (e.clientY - dragOffsetY) + 'px';
+
+  // Highlight colonne survolée
+  document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
+  const seg = getSegFromPoint(e.clientX, e.clientY);
+  if(seg){
+    document.getElementById('col-'+seg).classList.add('drag-over');
+    const pos = getInsertPosition(seg, e.clientY);
+    if(pos) insertPlaceholder(pos.zone, pos.beforeEl);
+
+    // Auto-scroll
+    const zone = document.getElementById('zone-'+seg);
+    if(zone){
+      const zr = zone.getBoundingClientRect();
+      if(e.clientY < zr.top + 60) zone.scrollTop -= 8;
+      else if(e.clientY > zr.bottom - 60) zone.scrollTop += 8;
+    }
+  } else {
+    removePlaceholder();
+  }
+}
+
+function onMouseUp(e){
+  document.removeEventListener('mousemove', onMouseMove);
+  document.removeEventListener('mouseup', onMouseUp);
+
+  if(dragGhost){ dragGhost.remove(); dragGhost=null; }
+  document.querySelectorAll('.drag-source').forEach(c=>c.classList.remove('drag-source'));
+  document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
+
+  const seg = getSegFromPoint(e.clientX, e.clientY);
+  if(!seg || dragCardId===null){ removePlaceholder(); dragCardId=null; return; }
+
+  const pos = getInsertPosition(seg, e.clientY);
   removePlaceholder();
 
-  if(dragId === null || !pos) { dragId=null; return; }
+  const draggedCard = state.companies.find(x=>x.id===dragCardId);
+  if(!draggedCard){ dragCardId=null; return; }
 
-  const draggedCard = state.companies.find(x=>x.id===dragId);
-  if(!draggedCard){ dragId=null; return; }
+  draggedCard.segment = seg;
+  state.companies = state.companies.filter(x=>x.id!==dragCardId);
 
-  // Mettre à jour le segment
-  draggedCard.segment = pos.seg || seg;
-
-  // Retirer de la liste
-  state.companies = state.companies.filter(x=>x.id!==dragId);
-
-  // Insérer à la bonne position
-  if(pos.beforeId !== null){
-    const idx = state.companies.findIndex(x=>x.id===pos.beforeId);
+  if(pos && pos.beforeEl){
+    const beforeId = parseInt(pos.beforeEl.dataset.id);
+    const idx = state.companies.findIndex(x=>x.id===beforeId);
     if(idx !== -1) state.companies.splice(idx, 0, draggedCard);
     else state.companies.push(draggedCard);
   } else {
-    // En fin de colonne cible : après la dernière carte du segment
-    const segCards = state.companies.filter(x=>x.segment===draggedCard.segment);
-    if(segCards.length > 0){
-      const last = segCards[segCards.length-1];
-      const lastIdx = state.companies.findIndex(x=>x.id===last.id);
-      state.companies.splice(lastIdx+1, 0, draggedCard);
-    } else {
-      state.companies.push(draggedCard);
-    }
+    let lastIdx = -1;
+    state.companies.forEach((c,i)=>{ if(c.segment===seg) lastIdx=i; });
+    state.companies.splice(lastIdx+1, 0, draggedCard);
   }
 
-  dragId=null;
+  dragCardId=null;
   renderAll(); saveLocal();
+  attachDragListeners();
 }
 
 // ── EXPORT ──
