@@ -467,12 +467,14 @@ function parsePlan(raw){
   state.location    = d.location    || d.villes  || '';
   const arr = d.targetCompanies || d.cibles || [];
   state.companies = arr.map(c=>({id:++idCtr, name:c.name||c.nom||'', segment:normSeg(c.segment), reason:c.reason||c.argument||'', priority:c.priority||false}));
-  if(parsed.npcList) npcList = parsed.npcList;
-  if(parsed.colTitles){
+  // Champs optionnels — compatibles avec les JSON sans ces champs
+  if(d.npcList && Array.isArray(d.npcList)) npcList = d.npcList;
+  if(d.colTitles){
     ['Direct','Connexe','Ouverture'].forEach(seg=>{
-      const t=document.getElementById('title-'+seg); const d=document.getElementById('desc-'+seg);
-      if(t&&parsed.colTitles[seg]) t.textContent=parsed.colTitles[seg];
-      if(d&&parsed.colDescs?.[seg]) d.textContent=parsed.colDescs[seg];
+      const t=document.getElementById('title-'+seg);
+      const desc=document.getElementById('desc-'+seg);
+      if(t && d.colTitles[seg]) t.textContent=d.colTitles[seg];
+      if(desc && d.colDescs?.[seg]) desc.textContent=d.colDescs[seg];
     });
   }
 }
