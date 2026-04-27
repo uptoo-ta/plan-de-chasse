@@ -217,6 +217,19 @@
   .btn-copy:hover{opacity:.82;}
   .copy-ok{font-size:11px;color:var(--vert4);display:none;align-items:center;gap:4px;margin-left:4px;}
   .copy-ok.show{display:flex;}
+  /* Indicateur sauvegarde */
+  .save-indicator{font-size:10px;color:var(--grey);display:none;align-items:center;gap:4px;transition:opacity .3s;}
+  .save-indicator.show{display:flex;}
+  /* Bouton restauration sur import screen */
+  .restore-banner{display:none;width:100%;max-width:860px;background:var(--bleu1);border:1.5px solid var(--bleu3);border-radius:10px;padding:14px 20px;margin-bottom:16px;align-items:center;justify-content:space-between;gap:12px;}
+  .restore-banner.show{display:flex;}
+  .restore-banner p{font-size:12px;color:var(--bleu4);font-weight:500;}
+  .restore-banner span{font-size:11px;color:var(--grey);margin-left:6px;font-weight:400;}
+  .restore-btns{display:flex;gap:8px;flex-shrink:0;}
+  .btn-restore{background:var(--bleu4);color:var(--blanc);border:none;border-radius:7px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;}
+  .btn-restore:hover{opacity:.85;}
+  .btn-discard{background:none;border:1.5px solid var(--bleu3);border-radius:7px;padding:7px 14px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--bleu4);cursor:pointer;}
+  .btn-discard:hover{background:var(--bleu2);}
 </style>
 </head>
 <body>
@@ -236,6 +249,16 @@
     </div>
 
     <!-- Grille 2 encarts -->
+    <!-- Banner restauration -->
+    <div class="restore-banner" id="restore-banner">
+      <div>
+        <p>Un plan de chasse a été sauvegardé automatiquement. <span id="restore-date"></span></p>
+      </div>
+      <div class="restore-btns">
+        <button class="btn-restore" onclick="restoreSession()">Reprendre</button>
+        <button class="btn-discard" onclick="discardSession()">Ignorer</button>
+      </div>
+    </div>
     <div class="import-grid">
 
       <!-- ENCART 1 : Générer -->
@@ -309,6 +332,7 @@
       </div>
     </div>
     <div class="header-right">
+      <span class="save-indicator" id="save-indicator">✓ Sauvegardé</span>
       <span class="badge-count" id="total-count">0 société</span>
       <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="openExportTexte()">Exporter le plan</button>
       <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="exportJSON()">Exporter JSON</button>
@@ -442,7 +466,15 @@ function parsePlan(raw){
   state.clientName  = d.clientName  || d.client  || '';
   state.location    = d.location    || d.villes  || '';
   const arr = d.targetCompanies || d.cibles || [];
-  state.companies = arr.map(c=>({id:++idCtr, name:c.name||c.nom||'', segment:normSeg(c.segment), reason:c.reason||c.argument||'', priority:false}));
+  state.companies = arr.map(c=>({id:++idCtr, name:c.name||c.nom||'', segment:normSeg(c.segment), reason:c.reason||c.argument||'', priority:c.priority||false}));
+  if(parsed.npcList) npcList = parsed.npcList;
+  if(parsed.colTitles){
+    ['Direct','Connexe','Ouverture'].forEach(seg=>{
+      const t=document.getElementById('title-'+seg); const d=document.getElementById('desc-'+seg);
+      if(t&&parsed.colTitles[seg]) t.textContent=parsed.colTitles[seg];
+      if(d&&parsed.colDescs?.[seg]) d.textContent=parsed.colDescs[seg];
+    });
+  }
 }
 
 // ── LOAD ──
@@ -465,6 +497,7 @@ function showApp(){
   renderAll();
 }
 function resetToImport(){
+  localStorage.removeItem(STORAGE_KEY);
   state={jobTitle:'',clientName:'',location:'',companies:[]};
   npcList=[];
   idCtr=0; dragId=null;
@@ -529,7 +562,7 @@ function confirmAdd(seg){
   if(!n){document.getElementById('an-'+seg)?.focus();return;}
   const r=(document.getElementById('ar-'+seg)||{}).value?.trim()||'';
   state.companies.push({id:++idCtr,name:n,segment:seg,reason:r,priority:false});
-  closeAdd(seg); renderCol(seg); updateCount();
+  closeAdd(seg); renderCol(seg); updateCount(); saveLocal();
 }
 
 // ── EDIT ──
@@ -547,7 +580,7 @@ function saveEdit(){
   if(!name) return;
   const c=state.companies.find(x=>x.id===id);
   if(c){c.name=name;c.reason=document.getElementById('edit-reason').value.trim();}
-  closeModal(); renderAll();
+  closeModal(); renderAll(); saveLocal();
 }
 function closeModal(){ document.getElementById('edit-modal').classList.remove('open'); }
 document.getElementById('edit-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
@@ -555,11 +588,11 @@ document.getElementById('edit-modal').addEventListener('click',function(e){if(e.
 // ── PRIORITY ──
 function togglePriority(id){
   const c=state.companies.find(x=>x.id===id);
-  if(c){c.priority=!c.priority; renderAll();}
+  if(c){c.priority=!c.priority; renderAll(); saveLocal();}
 }
 
 // ── DELETE ──
-function deleteCard(id){ state.companies=state.companies.filter(c=>c.id!==id); renderAll(); }
+function deleteCard(id){ state.companies=state.companies.filter(c=>c.id!==id); renderAll(); saveLocal(); }
 
 // ── DRAG ──
 function onDragStart(e,id){ dragId=id; setTimeout(()=>{const el=document.querySelector(`[data-id="${id}"]`); if(el) el.classList.add('dragging');},0); }
@@ -571,12 +604,14 @@ function onDrop(e,seg){
   if(dragId===null) return;
   const c=state.companies.find(x=>x.id===dragId);
   if(c) c.segment=seg;
-  dragId=null; renderAll();
+  dragId=null; renderAll(); saveLocal();
 }
 
 // ── EXPORT ──
 function exportJSON(){
-  const out={jobTitle:state.jobTitle,clientName:state.clientName,location:state.location,
+  const colTitles={Direct:document.getElementById('title-Direct')?.textContent.trim()||'Concurrence Directe',Connexe:document.getElementById('title-Connexe')?.textContent.trim()||'Secteurs Connexes',Ouverture:document.getElementById('title-Ouverture')?.textContent.trim()||'Ouverture'};
+  const colDescs={Direct:document.getElementById('desc-Direct')?.textContent.trim()||'',Connexe:document.getElementById('desc-Connexe')?.textContent.trim()||'',Ouverture:document.getElementById('desc-Ouverture')?.textContent.trim()||''};
+  const out={jobTitle:state.jobTitle,clientName:state.clientName,location:state.location,colTitles,colDescs,npcList,
     targetCompanies:state.companies.map(c=>({name:c.name,segment:c.segment,reason:c.reason,priority:c.priority||false}))};
   const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
   const a=document.createElement('a');
@@ -607,9 +642,9 @@ function confirmNpc(){
   if(!v) return;
   npcList.push(v);
   closeNpcInput();
-  renderNpc();
+  renderNpc(); saveLocal();
 }
-function removeNpc(i){ npcList.splice(i,1); renderNpc(); }
+function removeNpc(i){ npcList.splice(i,1); renderNpc(); saveLocal(); }
 function npcKeydown(e){ if(e.key==='Enter'){e.preventDefault();confirmNpc();} if(e.key==='Escape') closeNpcInput(); }
 
 // ── EXPORT TEXTE ──
@@ -643,9 +678,87 @@ function copyExport(){
 }
 document.getElementById('export-modal').addEventListener('click',function(e){if(e.target===this)closeExportModal();});
 
+
+// ── SAUVEGARDE LOCALE ──
+const STORAGE_KEY = 'uptoo_plan_chasse';
+
+function saveLocal(){
+  try{
+    const colTitles = {
+      Direct:   document.getElementById('title-Direct')?.textContent.trim()   || 'Concurrence Directe',
+      Connexe:  document.getElementById('title-Connexe')?.textContent.trim()  || 'Secteurs Connexes',
+      Ouverture:document.getElementById('title-Ouverture')?.textContent.trim()|| 'Ouverture'
+    };
+    const colDescs = {
+      Direct:   document.getElementById('desc-Direct')?.textContent.trim()   || '',
+      Connexe:  document.getElementById('desc-Connexe')?.textContent.trim()  || '',
+      Ouverture:document.getElementById('desc-Ouverture')?.textContent.trim()|| ''
+    };
+    const data = {
+      state, npcList, idCtr, colTitles, colDescs,
+      savedAt: new Date().toISOString()
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    showSaveIndicator();
+  } catch(e){}
+}
+
+function showSaveIndicator(){
+  const el = document.getElementById('save-indicator');
+  if(!el) return;
+  el.classList.add('show');
+  clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(()=>el.classList.remove('show'), 2000);
+}
+
+function checkRestore(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    if(!data.state?.companies?.length) return;
+    const banner = document.getElementById('restore-banner');
+    const dateEl = document.getElementById('restore-date');
+    if(data.savedAt){
+      const d = new Date(data.savedAt);
+      dateEl.textContent = 'Dernière modification : ' + d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    }
+    banner.classList.add('show');
+  } catch(e){}
+}
+
+function restoreSession(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    state   = data.state;
+    npcList = data.npcList || [];
+    idCtr   = data.idCtr  || 0;
+    document.getElementById('restore-banner').classList.remove('show');
+    showApp();
+    // Restaurer titres et descriptions
+    if(data.colTitles){
+      ['Direct','Connexe','Ouverture'].forEach(seg=>{
+        const t = document.getElementById('title-'+seg);
+        const d = document.getElementById('desc-'+seg);
+        if(t && data.colTitles[seg]) t.textContent = data.colTitles[seg];
+        if(d && data.colDescs?.[seg]) d.textContent = data.colDescs[seg];
+      });
+    }
+    renderNpc();
+  } catch(e){}
+}
+
+function discardSession(){
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('restore-banner').classList.remove('show');
+}
+
 // ── UTILS ──
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+checkRestore();
 </script>
 </body>
 </html>
