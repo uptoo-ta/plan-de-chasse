@@ -22,18 +22,53 @@
   html,body{height:100%;overflow:hidden;}
   body{font-family:'DM Sans',sans-serif;background:var(--light-grey);color:var(--noir);}
 
-  /* ── IMPORT ── */
-  #import-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;background:var(--blanc);}
-  .import-logo{margin-bottom:40px;}
-  .import-logo img{height:36px;}
-  .import-card{width:100%;max-width:660px;background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:12px;padding:40px;}
-  .import-card h1{font-size:21px;font-weight:700;color:var(--noir);margin-bottom:6px;}
-  .import-card p{font-size:12px;color:var(--grey);margin-bottom:24px;line-height:1.6;}
-  .import-card textarea{width:100%;height:200px;border:1.5px solid var(--grey-border1);border-radius:8px;padding:14px 16px;font-family:'DM Sans',monospace;font-size:11px;color:var(--dark-grey);background:var(--light-grey);resize:vertical;outline:none;transition:border-color .2s;line-height:1.6;}
-  .import-card textarea:focus{border-color:var(--bleu4);background:var(--blanc);}
-  .import-card textarea::placeholder{color:#aaa;}
-  .import-error{margin-top:10px;font-size:11px;color:#d32f2f;display:none;}
-  .btn-row{display:flex;align-items:center;gap:10px;margin-top:14px;}
+  /* ── IMPORT SCREEN ── */
+  #import-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;background:var(--light-grey);overflow-y:auto;}
+  .import-header{width:100%;background:var(--blanc);border-bottom:1.5px solid var(--grey-border1);padding:0 40px;height:64px;display:flex;align-items:center;flex-shrink:0;}
+  .import-header img{height:28px;}
+  .import-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;width:100%;}
+  .import-headline{text-align:center;margin-bottom:36px;}
+  .import-headline h1{font-size:26px;font-weight:700;color:var(--noir);margin-bottom:8px;letter-spacing:-.02em;}
+  .import-headline p{font-size:13px;color:var(--grey);line-height:1.6;max-width:480px;margin:0 auto;}
+  .import-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:860px;}
+
+  /* CARDS ENCARTS */
+  .icard{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;}
+  .icard:hover{box-shadow:0 4px 24px rgba(0,0,0,.07);border-color:var(--grey);}
+  .icard-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
+  .icard-accent.blue{background:linear-gradient(90deg,var(--bleu4),var(--violet4));}
+  .icard-accent.dark{background:var(--noir-bouton);}
+  .icard-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;flex-shrink:0;}
+  .icard-icon.blue{background:var(--bleu1);}
+  .icard-icon.dark{background:var(--light-grey);}
+  .icard-num{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:10px;}
+  .icard-num span{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+  .icard-num span.blue{background:var(--bleu2);color:var(--bleu4);}
+  .icard-num span.dark{background:var(--dark-grey);color:var(--blanc);}
+  .icard h2{font-size:16px;font-weight:700;color:var(--noir);margin-bottom:10px;letter-spacing:-.01em;}
+  .icard p{font-size:12px;color:var(--grey);line-height:1.7;flex:1;}
+  .icard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;margin-bottom:20px;}
+  .icard-tag{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;border:1px solid;}
+  .icard-tag.blue{background:var(--bleu1);color:var(--bleu4);border-color:var(--bleu3);}
+  .icard-tag.violet{background:var(--violet1);color:var(--violet4);border-color:var(--violet3);}
+  .icard-tag.beige{background:var(--beige1);color:var(--beige4);border-color:var(--beige3);}
+  .icard-divider{height:1px;background:var(--grey-border1);margin:20px 0;}
+  
+  /* TEXTAREA zone */
+  .icard textarea{width:100%;height:160px;border:1.5px solid var(--grey-border1);border-radius:10px;padding:12px 14px;font-family:'DM Sans',monospace;font-size:11px;color:var(--dark-grey);background:var(--light-grey);resize:none;outline:none;transition:border-color .2s,background .2s;line-height:1.6;margin-bottom:12px;}
+  .icard textarea:focus{border-color:var(--bleu4);background:var(--blanc);}
+  .icard textarea::placeholder{color:#bbb;}
+  .import-error{font-size:11px;color:#d32f2f;display:none;margin-bottom:8px;}
+  .btn-row{display:flex;align-items:center;gap:10px;}
+  
+  /* CTA Gem */
+  .gem-cta{display:flex;align-items:center;gap:12px;background:var(--bleu1);border:1.5px solid var(--bleu3);border-radius:10px;padding:14px 16px;text-decoration:none;transition:background .15s,border-color .15s;margin-top:20px;}
+  .gem-cta:hover{background:var(--bleu2);border-color:var(--bleu4);}
+  .gem-cta-icon{width:36px;height:36px;background:var(--bleu4);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .gem-cta-text{flex:1;}
+  .gem-cta-text strong{display:block;font-size:12px;font-weight:700;color:var(--bleu4);margin-bottom:2px;}
+  .gem-cta-text span{font-size:11px;color:var(--grey);}
+  .gem-cta-arrow{color:var(--bleu4);font-size:16px;}
   .btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--noir-bouton);color:var(--blanc);border:none;border-radius:8px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:opacity .15s;}
   .btn-primary:hover{opacity:.82;}
   .btn-ghost{display:inline-flex;align-items:center;gap:6px;background:transparent;color:var(--grey);border:1.5px solid var(--grey-border1);border-radius:8px;padding:10px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;cursor:pointer;transition:border-color .15s,color .15s;}
@@ -93,13 +128,11 @@
   @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
   .company-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);border-color:var(--grey-border2);}
   .company-card.dragging{opacity:.35;cursor:grabbing;}
-  .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:56px;margin-bottom:4px;line-height:1.3;}
-  .card-reason{font-size:11px;color:var(--dark-grey);line-height:1.5;padding-bottom:20px;}
+  .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:82px;margin-bottom:4px;line-height:1.3;}
+  .card-reason{font-size:11px;color:var(--dark-grey);line-height:1.5;}
   .card-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .12s;}
-  .card-star-wrap{position:absolute;bottom:8px;right:8px;opacity:0;transition:opacity .12s;}
   .company-card:hover .card-actions{opacity:1;}
-  .company-card:hover .card-star-wrap{opacity:1;}
-  .company-card .card-star-wrap.active{opacity:1;}
+  .company-card .card-actions.has-active{opacity:1;}
   .card-btn{width:24px;height:24px;border-radius:5px;border:1.5px solid var(--grey-border1);background:var(--blanc);color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:background .12s,color .12s,border-color .12s;}
   .card-btn:hover{background:var(--light-grey);border-color:var(--grey);color:var(--noir);}
   .card-btn.del:hover{background:#fdecea;border-color:#e57373;color:#c62828;}
@@ -190,26 +223,75 @@
 
 <!-- IMPORT -->
 <div id="import-screen">
-  <div class="import-logo"><img id="logo-import" alt="Uptoo"></div>
-  <div class="import-card">
-    <h1>Importer un plan de chasse</h1>
-    <p>Colle le JSON généré par ton Gem Gemini ci-dessous, puis clique sur "Charger le plan".<br>L'outil construit automatiquement le kanban pour ta CDL client.</p>
-    <textarea id="json-input" placeholder='{
+  <!-- Header avec logo -->
+  <div class="import-header">
+    <img id="logo-import" alt="Uptoo">
+  </div>
+
+  <div class="import-body">
+    <!-- Titre central -->
+    <div class="import-headline">
+      <h1>Plan de Chasse</h1>
+      <p>Génère et visualise en quelques secondes le plan de chasse de ta mission client.</p>
+    </div>
+
+    <!-- Grille 2 encarts -->
+    <div class="import-grid">
+
+      <!-- ENCART 1 : Générer -->
+      <div class="icard">
+        <div class="icard-accent blue"></div>
+        <div class="icard-icon blue">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bleu4)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="icard-num"><span class="blue">1</span>Générer</div>
+        <h2>Créer un plan de chasse</h2>
+        <p>Colle le brief de mission dans le Gem. Il analyse le secteur, identifie les meilleurs viviers de talents et sélectionne 20 entreprises cibles classées en 3 segments. Il te restitue un diagnostic stratégique et le JSON prêt à importer dans l'encart ci-dessous.</p>
+        <div class="icard-tags">
+          <span class="icard-tag blue">Concurrence directe</span>
+          <span class="icard-tag violet">Secteurs connexes</span>
+          <span class="icard-tag beige">Ouverture</span>
+        </div>
+        <a class="gem-cta" href="https://gemini.google.com/gem/1wwnQ6obSDXyRMP5ZBJXYSboQkWbSLVzV?usp=sharing" target="_blank">
+          <div class="gem-cta-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          </div>
+          <div class="gem-cta-text">
+            <strong>Ouvrir le Gem générateur</strong>
+            <span>gemini.google.com</span>
+          </div>
+          <span class="gem-cta-arrow">→</span>
+        </a>
+      </div>
+
+      <!-- ENCART 2 : Importer -->
+      <div class="icard">
+        <div class="icard-accent dark"></div>
+        <div class="icard-icon dark">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--dark-grey)" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+        </div>
+        <div class="icard-num"><span class="dark">2</span>Importer</div>
+        <h2>Visualiser le plan de chasse</h2>
+        <p>Colle le JSON généré par le Gem ci-dessous pour construire automatiquement le kanban de ta mission client.</p>
+        <div class="icard-divider"></div>
+        <textarea id="json-input" placeholder='{
   "jobTitle": "Responsable Commercial B2B",
   "clientName": "Nom du client",
   "location": "Paris",
   "targetCompanies": [
     { "name": "Entreprise A", "segment": "Direct", "reason": "Argument de ciblage." },
-    { "name": "Entreprise B", "segment": "Connexe", "reason": "Profils avec compétences transférables." },
-    { "name": "Entreprise C", "segment": "Ouverture", "reason": "Forte culture commerciale B2B." }
+    { "name": "Entreprise B", "segment": "Connexe", "reason": "Profils transférables." },
+    { "name": "Entreprise C", "segment": "Ouverture", "reason": "Forte culture commerciale." }
   ]
 }'></textarea>
-    <div class="import-error" id="import-error">⚠ JSON invalide — vérifie la structure ou recopie depuis le Gem.</div>
-    <div class="btn-row">
-      <button class="btn-primary" onclick="loadPlan()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        Charger le plan
-      </button>
+        <div class="import-error" id="import-error">⚠ JSON invalide — vérifie la structure ou recopie depuis le Gem.</div>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="loadPlan()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Charger le plan
+          </button>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -420,17 +502,15 @@ function renderCol(seg){
 
 function cardHTML(c,i){
   const priClass = c.priority ? ' priority' : '';
-  const starWrapClass = c.priority ? ' active' : '';
+  const actionsClass = c.priority ? ' has-active' : '';
   const starBtnClass = c.priority ? ' active' : '';
   const starIcon = c.priority ? '★' : '☆';
   return `<div class="company-card${priClass}" draggable="true" data-id="${c.id}" style="animation-delay:${i*.03}s">
     <div class="card-name">${esc(c.name)}</div>
     ${c.reason ? `<div class="card-reason">${esc(c.reason)}</div>` : ''}
-    <div class="card-actions">
+    <div class="card-actions${actionsClass}">
       <button class="card-btn" onclick="openEdit(${c.id})" title="Modifier">✎</button>
       <button class="card-btn del" onclick="deleteCard(${c.id})" title="Supprimer">✕</button>
-    </div>
-    <div class="card-star-wrap${starWrapClass}">
       <button class="card-btn card-star${starBtnClass}" onclick="togglePriority(${c.id})" title="Cible prioritaire">${starIcon}</button>
     </div>
   </div>`;
