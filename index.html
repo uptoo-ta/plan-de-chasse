@@ -124,12 +124,14 @@
   .seg-ouverture .col-count{background:var(--beige3);color:var(--beige4);}
 
   /* CARDS */
-  .company-card{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;cursor:grab;transition:box-shadow .15s,border-color .15s;position:relative;animation:fadeUp .18s ease both;}
+  .company-card{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;cursor:grab;transition:box-shadow .15s,border-color .15s;position:relative;}
   @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
   .company-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);border-color:var(--grey-border2);}
-  .company-card.dragging{opacity:.35;cursor:grabbing;}
+  .company-card.dragging{opacity:.08;cursor:grabbing;transform:scale(.96);}
+  .drag-placeholder{border:2.5px dashed var(--bleu4);border-radius:8px;background:var(--bleu1);min-height:80px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .drag-placeholder::after{content:"Déposer ici";font-size:11px;font-weight:600;color:var(--bleu4);letter-spacing:.04em;}
   .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:82px;margin-bottom:4px;line-height:1.3;}
-  .card-reason{font-size:11px;color:var(--dark-grey);line-height:1.5;}
+  .card-reason{font-size:12px;color:var(--dark-grey);line-height:1.6;font-weight:400;}
   .card-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .12s;}
   .company-card:hover .card-actions{opacity:1;}
   .company-card .card-actions.has-active{opacity:1;}
@@ -202,7 +204,7 @@
   .col-title{font-size:14px;font-weight:700;color:var(--noir);outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;border-radius:2px;}
   .col-title:hover{border-bottom-color:rgba(0,0,0,.2);}
   .col-title:focus{border-bottom-color:var(--bleu4);}
-  .col-desc{font-size:11px;color:var(--grey);line-height:1.5;margin-top:4px;outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;}
+  .col-desc{font-size:12px;color:var(--dark-grey);line-height:1.5;margin-top:4px;outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;font-weight:400;}
   .col-desc:hover{border-bottom-color:rgba(0,0,0,.15);}
   .col-desc:focus{border-bottom-color:var(--bleu4);}
 
@@ -211,7 +213,8 @@
   .export-modal-bg.open{display:flex;}
   .export-modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:560px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
   .export-modal h3{font-size:15px;font-weight:700;margin-bottom:16px;}
-  .export-textarea{width:100%;height:220px;border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;font-family:'DM Sans',monospace;font-size:11px;line-height:1.7;color:var(--dark-grey);background:var(--light-grey);resize:none;outline:none;}
+  .export-textarea{width:100%;height:220px;border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;font-size:11px;line-height:1.7;color:var(--dark-grey);background:var(--light-grey);overflow-y:auto;}
+  .export-textarea strong{font-weight:700 !important;color:var(--noir) !important;font-size:11px;}
   .export-modal-btns{display:flex;gap:8px;margin-top:14px;align-items:center;}
   .btn-copy{background:var(--noir-bouton);color:var(--blanc);border:none;border-radius:8px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;}
   .btn-copy:hover{opacity:.82;}
@@ -425,7 +428,8 @@
 <div class="export-modal-bg" id="export-modal">
   <div class="export-modal">
     <h3>Exporter le plan de chasse</h3>
-    <textarea class="export-textarea" id="export-content" readonly></textarea>
+    <div class="export-textarea" id="export-content"></div>
+    <textarea id="export-raw" style="position:absolute;opacity:0;pointer-events:none;height:0;"></textarea>
     <div class="export-modal-btns">
       <button class="btn-copy" onclick="copyExport()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
@@ -596,17 +600,125 @@ function togglePriority(id){
 // ── DELETE ──
 function deleteCard(id){ state.companies=state.companies.filter(c=>c.id!==id); renderAll(); saveLocal(); }
 
-// ── DRAG ──
-function onDragStart(e,id){ dragId=id; setTimeout(()=>{const el=document.querySelector(`[data-id="${id}"]`); if(el) el.classList.add('dragging');},0); }
-function onDragEnd(el){ el.classList.remove('dragging'); document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over')); }
-function onDragOver(e){ e.preventDefault(); e.currentTarget.classList.add('drag-over'); }
-function onDragLeave(e){ if(!e.currentTarget.contains(e.relatedTarget)) e.currentTarget.classList.remove('drag-over'); }
-function onDrop(e,seg){
-  e.preventDefault(); e.currentTarget.classList.remove('drag-over');
-  if(dragId===null) return;
-  const c=state.companies.find(x=>x.id===dragId);
-  if(c) c.segment=seg;
-  dragId=null; renderAll(); saveLocal();
+// ── DRAG (style Trello) ──
+// On lit la position du placeholder AU MOMENT du drop directement dans le DOM
+// pour éviter toute désynchronisation entre onDragOver et onDrop
+
+function removePlaceholder(){
+  document.querySelectorAll('.drag-placeholder').forEach(p=>p.remove());
+}
+
+function getPlaceholderPosition(){
+  // Retourne {seg, beforeId} en lisant le DOM au moment du drop
+  const ph = document.querySelector('.drag-placeholder');
+  if(!ph) return null;
+  const zone = ph.closest('.cards-zone');
+  if(!zone) return null;
+  const col = zone.closest('.k-col');
+  const seg = col ? col.id.replace('col-','') : null;
+  // La carte qui suit le placeholder
+  let next = ph.nextElementSibling;
+  while(next && !next.classList.contains('company-card')) next = next.nextElementSibling;
+  const beforeId = (next && !next.classList.contains('dragging')) ? parseInt(next.dataset.id) : null;
+  return { seg, beforeId };
+}
+
+function insertPlaceholder(zone, beforeEl){
+  removePlaceholder();
+  const ph = document.createElement('div');
+  ph.className = 'drag-placeholder';
+  if(beforeEl){
+    zone.insertBefore(ph, beforeEl);
+  } else {
+    const addBtn = zone.querySelector('.add-btn');
+    if(addBtn) zone.insertBefore(ph, addBtn);
+    else zone.appendChild(ph);
+  }
+}
+
+function onDragStart(e,id){
+  dragId=id;
+  e.dataTransfer.effectAllowed='move';
+  setTimeout(()=>{
+    const el=document.querySelector(`[data-id="${id}"]`);
+    if(el) el.classList.add('dragging');
+  },0);
+}
+
+function onDragEnd(el){
+  el.classList.remove('dragging');
+  document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
+  removePlaceholder();
+  dragId=null;
+}
+
+function onDragOver(e){
+  e.preventDefault();
+  const col = e.currentTarget;
+  col.classList.add('drag-over');
+  const zone = col.querySelector('.cards-zone');
+  if(!zone) return;
+
+  // Auto-scroll
+  const zRect = zone.getBoundingClientRect();
+  if(e.clientY < zRect.top + 60) zone.scrollTop -= 8;
+  else if(e.clientY > zRect.bottom - 60) zone.scrollTop += 8;
+
+  // Trouver la carte sous le curseur (ignorer la carte draggée)
+  const cards = [...zone.querySelectorAll('.company-card:not(.dragging)')];
+  let targetCard = null;
+  for(const card of cards){
+    const r = card.getBoundingClientRect();
+    if(e.clientY < r.top + r.height / 2){ targetCard = card; break; }
+  }
+  insertPlaceholder(zone, targetCard);
+}
+
+function onDragLeave(e){
+  if(!e.currentTarget.contains(e.relatedTarget)){
+    e.currentTarget.classList.remove('drag-over');
+    // Ne pas supprimer le placeholder ici pour éviter le scintillement
+  }
+}
+
+function onDrop(e, seg){
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+
+  // Lire la position AVANT de supprimer le placeholder
+  const pos = getPlaceholderPosition();
+  removePlaceholder();
+
+  if(dragId === null || !pos) { dragId=null; return; }
+
+  const draggedCard = state.companies.find(x=>x.id===dragId);
+  if(!draggedCard){ dragId=null; return; }
+
+  // Mettre à jour le segment
+  draggedCard.segment = pos.seg || seg;
+
+  // Retirer de la liste
+  state.companies = state.companies.filter(x=>x.id!==dragId);
+
+  // Insérer à la bonne position
+  if(pos.beforeId !== null){
+    const idx = state.companies.findIndex(x=>x.id===pos.beforeId);
+    if(idx !== -1) state.companies.splice(idx, 0, draggedCard);
+    else state.companies.push(draggedCard);
+  } else {
+    // En fin de colonne cible : après la dernière carte du segment
+    const segCards = state.companies.filter(x=>x.segment===draggedCard.segment);
+    if(segCards.length > 0){
+      const last = segCards[segCards.length-1];
+      const lastIdx = state.companies.findIndex(x=>x.id===last.id);
+      state.companies.splice(lastIdx+1, 0, draggedCard);
+    } else {
+      state.companies.push(draggedCard);
+    }
+  }
+
+  dragId=null;
+  renderAll(); saveLocal();
 }
 
 // ── EXPORT ──
@@ -665,15 +777,44 @@ function openExportTexte(){
   if(npcList.length){
     txt += `Entreprises où ne pas chasser :\n${npcList.join(', ')}`;
   }
-  document.getElementById('export-content').value = txt.trim();
+  // Texte brut pour la copie
+  document.getElementById('export-raw').value = txt.trim();
+  // HTML riche pour l'affichage
+  const htmlLines = txt.trim().split('\n').map(line=>{
+    if(line.trim()==='') return '<div style="height:8px"></div>';
+    if(/^Cible \d+\s*:/.test(line) || /^Entreprises où ne pas chasser/.test(line)){
+      return `<div><strong style="font-weight:700;color:#000;">${esc(line)}</strong></div>`;
+    }
+    return `<div>${esc(line)}</div>`;
+  }).join('');
+  document.getElementById('export-content').innerHTML = htmlLines;
   document.getElementById('export-modal').classList.add('open');
   document.getElementById('copy-ok').classList.remove('show');
 }
 function closeExportModal(){ document.getElementById('export-modal').classList.remove('open'); }
-function copyExport(){
-  const ta = document.getElementById('export-content');
-  ta.select();
-  document.execCommand('copy');
+async function copyExport(){
+  const ta = document.getElementById('export-raw');
+  const plain = ta.value;
+  // Construire version HTML riche : les lignes "Cible X : ..." en gras
+  const html = plain.split('\n').map(line=>{
+    if(/^Cible \d+\s*:/.test(line) || /^Entreprises où ne pas chasser/.test(line)){
+      return `<strong>${esc(line)}</strong>`;
+    }
+    return esc(line) || '&nbsp;';
+  }).join('<br>');
+
+  // Essayer ClipboardItem avec HTML riche
+  if(typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write){
+    try{
+      const htmlBlob = new Blob([`<!DOCTYPE html><html><body><div style="font-family:sans-serif;font-size:13px;line-height:1.8">${html}</div></body></html>`], {type:'text/html'});
+      const textBlob = new Blob([plain], {type:'text/plain'});
+      await navigator.clipboard.write([new ClipboardItem({'text/html':htmlBlob,'text/plain':textBlob})]);
+    } catch(e){
+      ta.select(); document.execCommand('copy');
+    }
+  } else {
+    ta.select(); document.execCommand('copy');
+  }
   const ok = document.getElementById('copy-ok');
   ok.classList.add('show');
   setTimeout(()=>ok.classList.remove('show'),2000);
