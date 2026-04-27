@@ -301,7 +301,7 @@
         <h2>Visualiser le plan de chasse</h2>
         <p>Colle le JSON généré par le Gem ci-dessous pour construire automatiquement le kanban de ta mission client.</p>
         <div class="icard-divider"></div>
-        <textarea id="json-input" placeholder='{
+        <textarea id="json-input" onkeydown="if(event.key==='Enter'){event.preventDefault();loadPlan();}" placeholder='{
   "jobTitle": "Responsable Commercial B2B",
   "clientName": "Nom du client",
   "location": "Paris",
