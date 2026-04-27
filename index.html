@@ -410,9 +410,9 @@
   <div class="modal">
     <h3>Modifier la société</h3>
     <label>Nom de la société</label>
-    <input type="text" id="edit-name">
+    <input type="text" id="edit-name" onkeydown="if(event.key==='Enter'){event.preventDefault();saveEdit();}">
     <label>Argument de ciblage</label>
-    <textarea rows="3" id="edit-reason"></textarea>
+    <textarea rows="3" id="edit-reason" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();saveEdit();}"></textarea>
     <input type="hidden" id="edit-id">
     <div class="modal-btns">
       <button class="btn-primary" style="flex:1;justify-content:center;" onclick="saveEdit()">Enregistrer</button>
@@ -520,8 +520,8 @@ function renderCol(seg){
   cards.forEach((c,i)=>{ html += cardHTML(c,i); });
   html += `<button class="add-btn" onclick="openAdd('${seg}')">+ Ajouter une société</button>`;
   html += `<div class="add-form" id="af-${seg}">
-    <input type="text" id="an-${seg}" placeholder="Nom de la société">
-    <textarea rows="2" id="ar-${seg}" placeholder="Argument de ciblage (optionnel)"></textarea>
+    <input type="text" id="an-${seg}" placeholder="Nom de la société" onkeydown="if(event.key==='Enter'){event.preventDefault();confirmAdd('${seg}');}  if(event.key==='Escape') closeAdd('${seg}');">
+    <textarea rows="2" id="ar-${seg}" placeholder="Argument de ciblage (optionnel)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();confirmAdd('${seg}');} if(event.key==='Escape') closeAdd('${seg}');"></textarea>
     <div class="add-form-btns">
       <button class="btn-confirm" onclick="confirmAdd('${seg}')">Ajouter</button>
       <button class="btn-cancel"  onclick="closeAdd('${seg}')">Annuler</button>
@@ -760,6 +760,14 @@ function discardSession(){
 // ── UTILS ──
 function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+// Entrée sur contenteditable = valider (blur)
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && e.target.hasAttribute('contenteditable')){
+    e.preventDefault();
+    e.target.blur();
+    saveLocal();
+  }
+});
 checkRestore();
 </script>
 </body>
