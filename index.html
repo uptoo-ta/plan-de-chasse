@@ -11,42 +11,29 @@
     --violet1:#EEECFD; --violet2:#DED8FD; --violet3:#D2CAFC; --violet4:#6C51F6;
     --vert1:#E2F7DE; --vert2:#C4F1BE; --vert3:#B3EDAB; --vert4:#39B927;
     --beige1:#FBF0E5; --beige2:#FEEAC1; --beige3:#FFDB99; --beige4:#E09100;
-    --rouge1:#FDECEA; --rouge2:#FFCDD2; --rouge4:#E53935;
     --noir:#000000; --blanc:#ffffff;
     --dark-grey:#2D323E; --grey:#737373;
     --light-grey:#F7F7F7;
     --grey-gs:#737373;
     --grey-border1:#D2D6DF; --grey-border2:#D2D6DF;
     --noir-bouton:#17171e;
-    /* uptoo client */
-    --uptoo-bg:#EDF3FD; --uptoo-border:#155ECA; --uptoo-text:#155ECA;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
-  html,body{height:100%;}
-  body.app-open{overflow:hidden;}
+  html,body{height:100%;overflow:hidden;}
   body{font-family:'DM Sans',sans-serif;background:var(--light-grey);color:var(--noir);}
 
   /* ── IMPORT SCREEN ── */
-  #import-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;background:var(--light-grey);overflow-y:auto;overflow-x:hidden;}
+  #import-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;background:var(--light-grey);overflow-y:auto;}
   .import-header{width:100%;background:var(--blanc);border-bottom:1.5px solid var(--grey-border1);padding:0 40px;height:64px;display:flex;align-items:center;flex-shrink:0;}
   .import-header img{height:28px;}
-  .import-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:48px 24px;width:100%;}
+  .import-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px 24px;width:100%;}
   .import-headline{text-align:center;margin-bottom:36px;}
   .import-headline h1{font-size:26px;font-weight:700;color:var(--noir);margin-bottom:8px;letter-spacing:-.02em;}
   .import-headline p{font-size:13px;color:var(--grey);line-height:1.6;max-width:480px;margin:0 auto;}
-  .import-grid{display:grid;grid-template-columns:repeat(2,minmax(320px,1fr));gap:20px;width:100%;max-width:960px;align-items:stretch;}
-  @media(max-width:720px){.import-grid{grid-template-columns:1fr;}}
-
-  /* LANG TOGGLE on import screen */
-  .lang-toggle{display:flex;align-items:center;gap:8px;margin-bottom:20px;}
-  .lang-toggle span{font-size:12px;color:var(--grey);}
-  .toggle-track{width:44px;height:24px;background:var(--grey-border1);border-radius:12px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
-  .toggle-track.on{background:var(--bleu4);}
-  .toggle-knob{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--blanc);transition:left .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-  .toggle-track.on .toggle-knob{left:23px;}
+  .import-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:860px;}
 
   /* CARDS ENCARTS */
-  .icard{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;min-width:0;}
+  .icard{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:0;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;}
   .icard:hover{box-shadow:0 4px 24px rgba(0,0,0,.07);border-color:var(--grey);}
   .icard-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
   .icard-accent.blue{background:linear-gradient(90deg,var(--bleu4),var(--violet4));}
@@ -54,26 +41,26 @@
   .icard-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;flex-shrink:0;}
   .icard-icon.blue{background:var(--bleu1);}
   .icard-icon.dark{background:var(--light-grey);}
-  .icard-num{display:flex;align-items:center;gap:8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:10px;}
-  .icard-num .badge{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0;line-height:1;}
-  .icard-num .badge.blue{background:var(--bleu2);color:var(--bleu4);}
-  .icard-num .badge.dark{background:var(--dark-grey);color:var(--blanc);}
+  .icard-num{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--grey);margin-bottom:10px;}
+  .icard-num span{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;}
+  .icard-num span.blue{background:var(--bleu2);color:var(--bleu4);}
+  .icard-num span.dark{background:var(--dark-grey);color:var(--blanc);}
   .icard h2{font-size:16px;font-weight:700;color:var(--noir);margin-bottom:10px;letter-spacing:-.01em;}
-  .icard p{font-size:12px;color:var(--grey);line-height:1.7;flex:1;word-break:break-word;overflow-wrap:break-word;}
+  .icard p{font-size:12px;color:var(--grey);line-height:1.7;flex:1;}
   .icard-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;margin-bottom:20px;}
   .icard-tag{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;border:1px solid;}
   .icard-tag.blue{background:var(--bleu1);color:var(--bleu4);border-color:var(--bleu3);}
   .icard-tag.violet{background:var(--violet1);color:var(--violet4);border-color:var(--violet3);}
   .icard-tag.beige{background:var(--beige1);color:var(--beige4);border-color:var(--beige3);}
   .icard-divider{height:1px;background:var(--grey-border1);margin:20px 0;}
-
+  
   /* TEXTAREA zone */
   .icard textarea{width:100%;height:160px;border:1.5px solid var(--grey-border1);border-radius:10px;padding:12px 14px;font-family:'DM Sans',monospace;font-size:11px;color:var(--dark-grey);background:var(--light-grey);resize:none;outline:none;transition:border-color .2s,background .2s;line-height:1.6;margin-bottom:12px;}
   .icard textarea:focus{border-color:var(--bleu4);background:var(--blanc);}
   .icard textarea::placeholder{color:#bbb;}
   .import-error{font-size:11px;color:#d32f2f;display:none;margin-bottom:8px;}
   .btn-row{display:flex;align-items:center;gap:10px;}
-
+  
   /* CTA Gem */
   .gem-cta{display:flex;align-items:center;gap:12px;background:var(--bleu1);border:1.5px solid var(--bleu3);border-radius:10px;padding:14px 16px;text-decoration:none;transition:background .15s,border-color .15s;margin-top:20px;}
   .gem-cta:hover{background:var(--bleu2);border-color:var(--bleu4);}
@@ -106,32 +93,20 @@
   .badge-count{font-size:11px;font-weight:500;color:var(--grey);background:var(--light-grey);border:1.5px solid var(--grey-border1);border-radius:20px;padding:4px 12px;}
   .btn-link{font-size:11px;color:var(--grey);background:none;border:none;cursor:pointer;padding:4px 8px;border-radius:4px;font-family:'DM Sans',sans-serif;transition:color .15s;}
   .btn-link:hover{color:var(--noir);}
-  /* undo btn */
-  .btn-undo{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--grey);background:none;border:1.5px solid var(--grey-border1);border-radius:7px;padding:6px 11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:border-color .15s,color .15s,opacity .15s;}
-  .btn-undo:hover:not(:disabled){border-color:var(--grey);color:var(--noir);}
-  .btn-undo:disabled{opacity:.35;cursor:default;}
 
   /* KANBAN */
   .kanban-wrap{flex:1;padding:18px 28px;overflow-x:auto;overflow-y:hidden;display:flex;flex-direction:column;min-height:0;}
-  .kanban-board{display:flex;gap:18px;min-width:600px;flex:1;min-height:0;}
+  .kanban-board{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;min-width:900px;flex:1;min-height:0;}
 
   /* COLUMN */
-  .k-col{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;transition:border-color .2s,box-shadow .2s;flex:1;min-width:240px;}
+  .k-col{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:12px;display:flex;flex-direction:column;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
   .k-col.drag-over{border-color:var(--bleu4);box-shadow:0 0 0 3px rgba(21,94,202,.1);}
-  .col-head{padding:16px 18px 14px;border-bottom:1.5px solid var(--grey-border1);position:relative;}
+  .col-head{padding:16px 18px 14px;border-bottom:1.5px solid var(--grey-border1);}
   .col-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:8px;}
-  .col-title-row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
-  .col-title{font-size:14px;font-weight:700;color:var(--noir);outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;border-radius:2px;flex:1;}
-  .col-title:hover{border-bottom-color:rgba(0,0,0,.2);}
-  .col-title:focus{border-bottom-color:var(--bleu4);}
-  .col-count{font-size:11px;font-weight:700;min-width:24px;height:24px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px;flex-shrink:0;}
-  .col-desc{font-size:12px;color:var(--dark-grey);line-height:1.5;margin-top:4px;outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;font-weight:400;}
-  .col-desc:hover{border-bottom-color:rgba(0,0,0,.15);}
-  .col-desc:focus{border-bottom-color:var(--bleu4);}
-  /* delete col btn */
-  .btn-del-col{position:absolute;top:10px;right:10px;width:22px;height:22px;border-radius:5px;border:1.5px solid transparent;background:transparent;color:var(--grey);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:0;transition:opacity .15s,background .12s,border-color .12s,color .12s;}
-  .col-head:hover .btn-del-col{opacity:1;}
-  .btn-del-col:hover{background:#fdecea;border-color:#e57373;color:#c62828;}
+  .col-title-row{display:flex;align-items:baseline;justify-content:space-between;}
+  .col-title{font-size:14px;font-weight:700;color:var(--noir);}
+  .col-count{font-size:11px;font-weight:700;min-width:24px;height:24px;border-radius:12px;display:inline-flex;align-items:center;justify-content:center;padding:0 7px;}
+  .col-desc{font-size:11px;color:var(--grey);line-height:1.5;margin-top:4px;}
 
   /* segment colors */
   .seg-direct   .col-tag{background:var(--bleu2);color:var(--bleu4);}
@@ -146,15 +121,19 @@
 
   /* CARDS */
   .company-card{background:var(--blanc);border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;cursor:grab;transition:box-shadow .15s,border-color .15s;position:relative;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
   .company-card:hover{box-shadow:0 3px 14px rgba(0,0,0,.08);border-color:var(--grey-border2);}
   .company-card.drag-source{opacity:.12;}
-  .drag-placeholder{border-radius:8px;min-height:60px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2.5px dashed var(--bleu4);background:var(--bleu1);}
+  .company-card.dragging{opacity:.08;cursor:grabbing;transform:scale(.96);}
+  .drag-placeholder{border-radius:8px;min-height:80px;margin:4px 0;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:2.5px dashed var(--bleu4);background:var(--bleu1);}
   .drag-placeholder::after{content:"Déposer ici";font-size:11px;font-weight:600;letter-spacing:.04em;color:var(--bleu4);}
+  .seg-direct   .drag-placeholder{border-color:var(--bleu4);background:var(--bleu1);}
+  .seg-direct   .drag-placeholder::after{color:var(--bleu4);}
   .seg-connexe  .drag-placeholder{border-color:var(--violet4);background:var(--violet1);}
   .seg-connexe  .drag-placeholder::after{color:var(--violet4);}
   .seg-ouverture .drag-placeholder{border-color:var(--beige4);background:var(--beige1);}
   .seg-ouverture .drag-placeholder::after{color:var(--beige4);}
-  .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:90px;margin-bottom:4px;line-height:1.3;}
+  .card-name{font-size:13px;font-weight:600;color:var(--noir);padding-right:82px;margin-bottom:4px;line-height:1.3;}
   .card-reason{font-size:12px;color:var(--dark-grey);line-height:1.6;font-weight:400;}
   .card-actions{position:absolute;top:8px;right:8px;display:flex;gap:4px;opacity:0;transition:opacity .12s;}
   .company-card:hover .card-actions{opacity:1;}
@@ -163,22 +142,6 @@
   .card-btn:hover{background:var(--light-grey);border-color:var(--grey);color:var(--noir);}
   .card-btn.del:hover{background:#fdecea;border-color:#e57373;color:#c62828;}
 
-  /* PRIORITY star */
-  .card-btn.card-star{font-size:14px;}
-  .seg-direct   .card-btn.card-star.active{color:var(--bleu4);border-color:var(--bleu3);background:var(--bleu2);}
-  .seg-connexe  .card-btn.card-star.active{color:var(--violet4);border-color:var(--violet3);background:var(--violet2);}
-  .seg-ouverture .card-btn.card-star.active{color:var(--beige4);border-color:var(--beige3);background:var(--beige2);}
-  .seg-direct   .company-card.priority{background:var(--bleu1);border-color:var(--bleu3);}
-  .seg-connexe  .company-card.priority{background:var(--violet1);border-color:var(--violet3);}
-  .seg-ouverture .company-card.priority{background:var(--beige1);border-color:var(--beige3);}
-
-  /* UPTOO CLIENT badge */
-  .card-btn.card-uptoo{font-size:10px;font-weight:700;letter-spacing:.01em;}
-  .card-btn.card-uptoo.active{background:var(--bleu4);border-color:var(--bleu4);color:var(--blanc);}
-  .company-card.uptoo-client{border-color:var(--bleu4);border-width:2px;}
-  .uptoo-client-badge{display:inline-flex;align-items:center;gap:4px;background:var(--bleu4);color:var(--blanc);border-radius:4px;padding:2px 6px;font-size:9px;font-weight:700;letter-spacing:.05em;margin-top:5px;}
-  .uptoo-client-badge svg{flex-shrink:0;}
-
   /* ADD */
   .add-btn{width:100%;padding:9px 14px;background:transparent;border:1.5px dashed var(--grey-border1);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--grey);cursor:pointer;text-align:left;transition:border-color .15s,color .15s,background .15s;margin-top:2px;}
   .add-btn:hover{border-color:var(--grey);color:var(--noir);background:var(--light-grey);}
@@ -186,13 +149,14 @@
   .add-form.open{display:flex;}
   .add-form input,.add-form textarea{width:100%;border:1.5px solid var(--grey-border1);border-radius:6px;padding:7px 10px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--noir);background:var(--blanc);outline:none;resize:none;transition:border-color .15s;}
   .add-form input:focus,.add-form textarea:focus{border-color:var(--bleu4);}
+  .add-form input::placeholder,.add-form textarea::placeholder{color:#aaa;}
   .add-form-btns{display:flex;gap:6px;}
   .btn-confirm{flex:1;background:var(--noir-bouton);color:var(--blanc);border:none;border-radius:6px;padding:7px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:opacity .15s;}
   .btn-confirm:hover{opacity:.8;}
   .btn-cancel{background:transparent;color:var(--grey);border:1.5px solid var(--grey-border1);border-radius:6px;padding:7px 12px;font-family:'DM Sans',sans-serif;font-size:11px;cursor:pointer;}
   .btn-cancel:hover{border-color:var(--grey);color:var(--noir);}
 
-  /* MODAL edit */
+  /* MODAL */
   .modal-bg{display:none;position:fixed;inset:0;background:rgba(45,50,62,.4);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
   .modal-bg.open{display:flex;}
   .modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
@@ -203,21 +167,10 @@
   .modal input:focus,.modal textarea:focus{border-color:var(--bleu4);}
   .modal-btns{display:flex;gap:8px;margin-top:20px;}
 
-  /* MODAL confirm delete col */
-  .confirm-col-bg{display:none;position:fixed;inset:0;background:rgba(45,50,62,.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
-  .confirm-col-bg.open{display:flex;}
-  .confirm-col-modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:380px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
-  .confirm-col-modal h3{font-size:15px;font-weight:700;margin-bottom:8px;}
-  .confirm-col-modal p{font-size:12px;color:var(--grey);line-height:1.6;margin-bottom:22px;}
-  .confirm-col-btns{display:flex;flex-direction:column;gap:8px;}
-  .btn-del-confirm{background:#c62828;color:var(--blanc);border:none;border-radius:8px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:opacity .15s;}
-  .btn-del-confirm:hover{opacity:.85;}
-
   /* FOOTER */
   .app-footer{background:var(--blanc);border-top:1.5px solid var(--grey-border1);padding:12px 28px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
   .footer-hint{font-size:11px;color:var(--grey);}
-
-  /* CONFIRM RESET */
+  /* Modale confirmation reset */
   .confirm-modal-bg{display:none;position:fixed;inset:0;background:rgba(45,50,62,.4);z-index:400;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
   .confirm-modal-bg.open{display:flex;}
   .confirm-modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
@@ -231,7 +184,17 @@
   .btn-cancel-reset{background:transparent;color:var(--grey);border:none;border-radius:8px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:12px;cursor:pointer;text-align:center;transition:color .15s;}
   .btn-cancel-reset:hover{color:var(--noir);}
 
-  /* NPC BAR */
+  /* ── ÉTOILE PRIORITAIRE ── */
+  .card-btn.card-star{font-size:14px;}
+  .seg-direct   .card-btn.card-star.active{color:var(--bleu4);border-color:var(--bleu3);background:var(--bleu2);}
+  .seg-connexe  .card-btn.card-star.active{color:var(--violet4);border-color:var(--violet3);background:var(--violet2);}
+  .seg-ouverture .card-btn.card-star.active{color:var(--beige4);border-color:var(--beige3);background:var(--beige2);}
+  .seg-direct   .company-card.priority{background:var(--bleu1);border-color:var(--bleu3);}
+  .seg-connexe  .company-card.priority{background:var(--violet1);border-color:var(--violet3);}
+  .seg-ouverture .company-card.priority{background:var(--beige1);border-color:var(--beige3);}
+  .company-card.priority .card-name{color:var(--noir);}
+
+  /* ── BANDEAU NE PAS CHASSER ── */
   .npc-bar{background:#fff5f5;border-bottom:1.5px solid #fca5a5;padding:10px 28px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;min-height:48px;flex-shrink:0;}
   .npc-label{font-size:11px;font-weight:700;color:#b91c1c;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;display:flex;align-items:center;gap:6px;}
   .npc-tags{display:flex;flex-wrap:wrap;gap:6px;flex:1;align-items:center;}
@@ -243,30 +206,38 @@
   .npc-input-wrap{display:none;align-items:center;gap:6px;}
   .npc-input-wrap.open{display:flex;}
   .npc-input{border:1.5px solid #fca5a5;border-radius:20px;padding:3px 10px;font-size:11px;font-family:'DM Sans',sans-serif;color:#b91c1c;background:#fff;outline:none;width:160px;}
+  .npc-input:focus{border-color:#b91c1c;}
   .npc-confirm{background:#b91c1c;color:#fff;border:none;border-radius:20px;padding:3px 10px;font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;}
   .npc-cancel-btn{background:none;border:none;color:#b91c1c;font-size:14px;cursor:pointer;opacity:.6;line-height:1;}
   .npc-cancel-btn:hover{opacity:1;}
 
-  /* SCROLL COLONNES */
+  /* ── SCROLL INTERNE COLONNES ── */
   .cards-zone{flex:1;padding:12px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;min-height:0;}
 
-  /* EXPORT */
+  /* ── TITRES/DESC COLONNES ÉDITABLES ── */
+  .col-title{font-size:14px;font-weight:700;color:var(--noir);outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;border-radius:2px;}
+  .col-title:hover{border-bottom-color:rgba(0,0,0,.2);}
+  .col-title:focus{border-bottom-color:var(--bleu4);}
+  .col-desc{font-size:12px;color:var(--dark-grey);line-height:1.5;margin-top:4px;outline:none;cursor:text;border-bottom:1.5px solid transparent;transition:border-color .15s;padding:1px 2px;font-weight:400;}
+  .col-desc:hover{border-bottom-color:rgba(0,0,0,.15);}
+  .col-desc:focus{border-bottom-color:var(--bleu4);}
+
+  /* ── MODAL EXPORT TEXTE ── */
   .export-modal-bg{display:none;position:fixed;inset:0;background:rgba(45,50,62,.4);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(2px);}
   .export-modal-bg.open{display:flex;}
   .export-modal{background:var(--blanc);border-radius:12px;padding:28px;width:100%;max-width:560px;box-shadow:0 8px 40px rgba(0,0,0,.14);animation:mIn .18s ease;}
   .export-modal h3{font-size:15px;font-weight:700;margin-bottom:16px;}
   .export-textarea{width:100%;height:220px;border:1.5px solid var(--grey-border1);border-radius:8px;padding:12px 14px;font-size:11px;line-height:1.7;color:var(--dark-grey);background:var(--light-grey);overflow-y:auto;}
+  .export-textarea strong{font-weight:700 !important;color:var(--noir) !important;font-size:11px;}
   .export-modal-btns{display:flex;gap:8px;margin-top:14px;align-items:center;}
   .btn-copy{background:var(--noir-bouton);color:var(--blanc);border:none;border-radius:8px;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;transition:opacity .15s;}
   .btn-copy:hover{opacity:.82;}
   .copy-ok{font-size:11px;color:var(--vert4);display:none;align-items:center;gap:4px;margin-left:4px;}
   .copy-ok.show{display:flex;}
-
-  /* SAVE INDICATOR */
-  .save-indicator{font-size:10px;color:var(--grey);display:none;align-items:center;gap:4px;}
+  /* Indicateur sauvegarde */
+  .save-indicator{font-size:10px;color:var(--grey);display:none;align-items:center;gap:4px;transition:opacity .3s;}
   .save-indicator.show{display:flex;}
-
-  /* RESTORE BANNER */
+  /* Bouton restauration sur import screen */
   .restore-banner{display:none;width:100%;max-width:860px;background:var(--bleu1);border:1.5px solid var(--bleu3);border-radius:10px;padding:14px 20px;margin-bottom:16px;align-items:center;justify-content:space-between;gap:12px;}
   .restore-banner.show{display:flex;}
   .restore-banner p{font-size:12px;color:var(--bleu4);font-weight:500;}
@@ -287,24 +258,16 @@
   </div>
   <div class="import-body">
     <div class="import-headline">
-      <h1 id="txt-import-title">Plan de Chasse</h1>
-      <p id="txt-import-sub">Génère et visualise en quelques secondes le plan de chasse de ta mission client.</p>
-    </div>
-    <!-- Lang toggle -->
-    <div class="lang-toggle">
-      <span id="txt-lang-fr">FR</span>
-      <div class="toggle-track" id="lang-track" onclick="toggleLang()">
-        <div class="toggle-knob"></div>
-      </div>
-      <span id="txt-lang-en">EN</span>
+      <h1>Plan de Chasse</h1>
+      <p>Génère et visualise en quelques secondes le plan de chasse de ta mission client.</p>
     </div>
     <div class="restore-banner" id="restore-banner">
       <div>
-        <p id="txt-restore-msg">Un plan de chasse a été sauvegardé automatiquement. <span id="restore-date"></span></p>
+        <p>Un plan de chasse a été sauvegardé automatiquement. <span id="restore-date"></span></p>
       </div>
       <div class="restore-btns">
-        <button class="btn-restore" onclick="restoreSession()" id="btn-restore-lbl">Reprendre</button>
-        <button class="btn-discard" onclick="discardSession()" id="btn-discard-lbl">Ignorer</button>
+        <button class="btn-restore" onclick="restoreSession()">Reprendre</button>
+        <button class="btn-discard" onclick="discardSession()">Ignorer</button>
       </div>
     </div>
     <div class="import-grid">
@@ -314,20 +277,20 @@
         <div class="icard-icon blue">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--bleu4)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
-        <div class="icard-num"><div class="badge blue">1</div><span id="txt-step1-label">Générer</span></div>
-        <h2 id="txt-step1-title">Créer un plan de chasse</h2>
-        <p id="txt-step1-body">Colle le brief de mission dans le Gem. Il analyse le secteur, identifie les meilleurs viviers de talents et sélectionne 20 entreprises cibles classées en 3 segments. Il te restitue un diagnostic stratégique et le JSON prêt à importer.</p>
+        <div class="icard-num"><span class="blue">1</span>&nbsp;Générer</div>
+        <h2>Créer un plan de chasse</h2>
+        <p>Colle le brief de mission dans le Gem. Il analyse le secteur, identifie les meilleurs viviers de talents et sélectionne 20 entreprises cibles classées en 3 segments. Il te restitue un diagnostic stratégique et le JSON prêt à importer dans l'encart ci-dessous.</p>
         <div class="icard-tags">
-          <span class="icard-tag blue" id="txt-tag1">Concurrence directe</span>
-          <span class="icard-tag violet" id="txt-tag2">Secteurs connexes</span>
-          <span class="icard-tag beige" id="txt-tag3">Ouverture</span>
+          <span class="icard-tag blue">Concurrence directe</span>
+          <span class="icard-tag violet">Secteurs connexes</span>
+          <span class="icard-tag beige">Ouverture</span>
         </div>
         <a class="gem-cta" href="https://gemini.google.com/gem/1wwnQ6obSDXyRMP5ZBJXYSboQkWbSLVzV?usp=sharing" target="_blank">
           <div class="gem-cta-icon">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
           </div>
           <div class="gem-cta-text">
-            <strong id="txt-gem-cta">Ouvrir le Gem générateur</strong>
+            <strong>Ouvrir le Gem générateur</strong>
             <span>gemini.google.com</span>
           </div>
           <span class="gem-cta-arrow">→</span>
@@ -339,16 +302,16 @@
         <div class="icard-icon dark">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--dark-grey)" stroke-width="2"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
         </div>
-        <div class="icard-num"><div class="badge dark">2</div><span id="txt-step2-label">Importer</span></div>
-        <h2 id="txt-step2-title">Visualiser le plan de chasse</h2>
-        <p id="txt-step2-body">Colle le JSON généré par le Gem ci-dessous pour construire automatiquement le kanban de ta mission client.</p>
+        <div class="icard-num"><span class="dark">2</span>&nbsp;Importer</div>
+        <h2>Visualiser le plan de chasse</h2>
+        <p>Colle le JSON généré par le Gem ci-dessous pour construire automatiquement le kanban de ta mission client.</p>
         <div class="icard-divider"></div>
         <textarea id="json-input" onkeydown="if(event.key==='Enter'){event.preventDefault();loadPlan();}" placeholder='{"jobTitle":"...","clientName":"...","location":"...","targetCompanies":[]}'></textarea>
         <div class="import-error" id="import-error">⚠ JSON invalide — vérifie la structure ou recopie depuis le Gem.</div>
         <div class="btn-row">
           <button class="btn-primary" onclick="loadPlan()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            <span id="txt-load-btn">Charger le plan</span>
+            Charger le plan
           </button>
         </div>
       </div>
@@ -368,66 +331,83 @@
       </div>
     </div>
     <div class="header-right">
-      <span class="save-indicator" id="save-indicator">✓ <span id="txt-saved">Sauvegardé</span></span>
-      <button class="btn-undo" id="btn-undo" onclick="undo()" disabled title="Ctrl+Z">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 7v6h6"/><path d="M3 13C5 7 11 3 17 5c4 1 6 5 6 9"/></svg>
-        <span id="txt-undo-btn">Annuler</span>
-      </button>
-      <span class="badge-count" id="total-count">0</span>
-      <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="openExportTexte()" id="btn-export-txt-lbl">Exporter le plan</button>
-      <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="exportJSON()" id="btn-export-json-lbl">Exporter JSON</button>
-      <button class="btn-link" onclick="resetToImport()" id="btn-new-plan-lbl">← <span id="txt-new-plan">Nouveau plan</span></button>
+      <span class="save-indicator" id="save-indicator">✓ Sauvegardé</span>
+      <span class="badge-count" id="total-count">0 société</span>
+      <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="openExportTexte()">Exporter le plan</button>
+      <button class="btn-ghost" style="padding:8px 14px;font-size:11px;" onclick="exportJSON()">Exporter JSON</button>
+      <button class="btn-link" onclick="resetToImport()">← Nouveau plan</button>
     </div>
   </header>
 
-  <!-- NPC BAR -->
   <div class="npc-bar">
     <span class="npc-label">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-      <span id="txt-npc-label">Ne pas chasser</span>
+      Ne pas chasser
     </span>
     <div class="npc-tags" id="npc-tags"></div>
-    <button class="npc-add" id="npc-add-btn" onclick="openNpcInput()">+ <span id="txt-npc-add">Ajouter</span></button>
+    <button class="npc-add" id="npc-add-btn" onclick="openNpcInput()">+ Ajouter</button>
     <div class="npc-input-wrap" id="npc-input-wrap">
-      <input class="npc-input" id="npc-input" onkeydown="npcKeydown(event)">
-      <button class="npc-confirm" onclick="confirmNpc()" id="txt-npc-confirm-btn">Ajouter</button>
+      <input class="npc-input" id="npc-input" placeholder="Nom de la société" onkeydown="npcKeydown(event)">
+      <button class="npc-confirm" onclick="confirmNpc()">Ajouter</button>
       <button class="npc-cancel-btn" onclick="closeNpcInput()">✕</button>
     </div>
   </div>
 
   <div class="kanban-wrap">
-    <div class="kanban-board" id="kanban-board"></div>
+    <div class="kanban-board" id="kanban-board">
+      <div class="k-col seg-direct" id="col-Direct">
+        <div class="col-head">
+          <div class="col-tag">Cible 1</div>
+          <div class="col-title-row">
+            <span class="col-title" id="title-Direct" contenteditable="true" spellcheck="false">Concurrence Directe</span>
+            <span class="col-count" id="counter-Direct">0</span>
+          </div>
+          <div class="col-desc" id="desc-Direct" contenteditable="true" spellcheck="false">Même secteur, profils identiques à la cible recherchée.</div>
+        </div>
+        <div class="cards-zone" id="zone-Direct"></div>
+      </div>
+      <div class="k-col seg-connexe" id="col-Connexe">
+        <div class="col-head">
+          <div class="col-tag">Cible 2</div>
+          <div class="col-title-row">
+            <span class="col-title" id="title-Connexe" contenteditable="true" spellcheck="false">Secteurs Connexes</span>
+            <span class="col-count" id="counter-Connexe">0</span>
+          </div>
+          <div class="col-desc" id="desc-Connexe" contenteditable="true" spellcheck="false">Compétences transférables, contexte de vente proche.</div>
+        </div>
+        <div class="cards-zone" id="zone-Connexe"></div>
+      </div>
+      <div class="k-col seg-ouverture" id="col-Ouverture">
+        <div class="col-head">
+          <div class="col-tag">Cible 3</div>
+          <div class="col-title-row">
+            <span class="col-title" id="title-Ouverture" contenteditable="true" spellcheck="false">Ouverture</span>
+            <span class="col-count" id="counter-Ouverture">0</span>
+          </div>
+          <div class="col-desc" id="desc-Ouverture" contenteditable="true" spellcheck="false">Forte culture commerciale, profils hors secteur adaptables.</div>
+        </div>
+        <div class="cards-zone" id="zone-Ouverture"></div>
+      </div>
+    </div>
   </div>
 
   <footer class="app-footer">
-    <span class="footer-hint" id="txt-footer-hint">Glisser-déposer pour réorganiser · Survoler une carte pour modifier · Ctrl+Z pour annuler</span>
+    <span class="footer-hint">Glisser-déposer pour réorganiser · Survoler une carte pour modifier ou supprimer · Double-clic sur le nom client pour l'éditer</span>
   </footer>
 </div>
 
 <!-- EDIT MODAL -->
 <div class="modal-bg" id="edit-modal">
   <div class="modal">
-    <h3 id="txt-edit-title">Modifier la société</h3>
-    <label id="txt-edit-name-lbl">Nom de la société</label>
+    <h3>Modifier la société</h3>
+    <label>Nom de la société</label>
     <input type="text" id="edit-name" onkeydown="if(event.key==='Enter'){event.preventDefault();saveEdit();}">
-    <label id="txt-edit-reason-lbl">Argument de ciblage</label>
+    <label>Argument de ciblage</label>
     <textarea rows="3" id="edit-reason" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();saveEdit();}"></textarea>
     <input type="hidden" id="edit-id">
     <div class="modal-btns">
-      <button class="btn-primary" style="flex:1;justify-content:center;" onclick="saveEdit()" id="txt-edit-save-btn">Enregistrer</button>
-      <button class="btn-ghost" onclick="closeModal()" id="txt-edit-cancel-btn">Annuler</button>
-    </div>
-  </div>
-</div>
-
-<!-- CONFIRM DELETE COLUMN -->
-<div class="confirm-col-bg" id="confirm-col-modal">
-  <div class="confirm-col-modal">
-    <h3 id="txt-del-col-title">Supprimer cette colonne ?</h3>
-    <p id="txt-del-col-body">Toutes les sociétés de cette colonne seront supprimées. Cette action peut être annulée avec Ctrl+Z.</p>
-    <div class="confirm-col-btns">
-      <button class="btn-del-confirm" onclick="confirmDeleteCol()" id="txt-del-col-confirm">Supprimer</button>
-      <button class="btn-ghost" onclick="closeConfirmCol()" id="txt-del-col-cancel">Annuler</button>
+      <button class="btn-primary" style="flex:1;justify-content:center;" onclick="saveEdit()">Enregistrer</button>
+      <button class="btn-ghost" onclick="closeModal()">Annuler</button>
     </div>
   </div>
 </div>
@@ -435,15 +415,15 @@
 <!-- CONFIRM RESET -->
 <div class="confirm-modal-bg" id="confirm-reset-modal">
   <div class="confirm-modal">
-    <h3 id="txt-reset-title">Nouveau plan de chasse</h3>
-    <p id="txt-reset-body">Le plan en cours sera effacé. Pense à exporter le JSON si tu veux le conserver.</p>
+    <h3>Nouveau plan de chasse</h3>
+    <p>Le plan en cours sera effacé. Pense à exporter le JSON si tu veux le conserver.</p>
     <div class="confirm-modal-btns">
       <button class="btn-export-reset" onclick="exportThenReset()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        <span id="txt-reset-export">Exporter le JSON puis continuer</span>
+        Exporter le JSON puis continuer
       </button>
-      <button class="btn-reset-only" onclick="confirmReset()" id="txt-reset-noexport">Continuer sans exporter</button>
-      <button class="btn-cancel-reset" onclick="closeConfirmReset()" id="txt-reset-cancel">Annuler</button>
+      <button class="btn-reset-only" onclick="confirmReset()">Continuer sans exporter</button>
+      <button class="btn-cancel-reset" onclick="closeConfirmReset()">Annuler</button>
     </div>
   </div>
 </div>
@@ -451,242 +431,39 @@
 <!-- EXPORT TEXTE -->
 <div class="export-modal-bg" id="export-modal">
   <div class="export-modal">
-    <h3 id="txt-export-title">Exporter le plan de chasse</h3>
+    <h3>Exporter le plan de chasse</h3>
     <div class="export-textarea" id="export-content"></div>
     <textarea id="export-raw" style="position:absolute;opacity:0;pointer-events:none;height:0;"></textarea>
     <div class="export-modal-btns">
       <button class="btn-copy" onclick="copyExport()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span id="txt-copy-btn">Copier</span>
+        Copier
       </button>
-      <span class="copy-ok" id="copy-ok">✓ <span id="txt-copied">Copié !</span></span>
-      <button class="btn-ghost" style="margin-left:auto;" onclick="closeExportModal()" id="txt-close-btn">Fermer</button>
+      <span class="copy-ok" id="copy-ok">✓ Copié !</span>
+      <button class="btn-ghost" style="margin-left:auto;" onclick="closeExportModal()">Fermer</button>
     </div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════
-// I18N
-// ══════════════════════════════════════
-const I18N = {
-  fr: {
-    importTitle:'Plan de Chasse',
-    importSub:'Génère et visualise en quelques secondes le plan de chasse de ta mission client.',
-    step1Label:'Générer', step1Title:'Créer un plan de chasse',
-    step1Body:'Colle le brief de mission dans le Gem. Il analyse le secteur, identifie les meilleurs viviers de talents et sélectionne 20 entreprises cibles classées en 3 segments.',
-    tag1:'Concurrence directe', tag2:'Secteurs connexes', tag3:'Ouverture',
-    gemCta:'Ouvrir le Gem générateur',
-    step2Label:'Importer', step2Title:'Visualiser le plan de chasse',
-    step2Body:'Colle le JSON généré par le Gem ci-dessous pour construire automatiquement le kanban de ta mission client.',
-    loadBtn:'Charger le plan',
-    savedLbl:'Sauvegardé', undoBtn:'Annuler',
-    exportTxtBtn:'Exporter le plan', exportJsonBtn:'Exporter JSON', newPlanBtn:'Nouveau plan',
-    npcLabel:'Ne pas chasser', npcAdd:'Ajouter', npcPlaceholder:'Nom de la société', npcConfirm:'Ajouter',
-    footerHint:'Glisser-déposer pour réorganiser · Survoler une carte pour modifier · Ctrl+Z pour annuler',
-    editTitle:'Modifier la société', editNameLbl:'Nom de la société', editReasonLbl:'Argument de ciblage',
-    editSave:'Enregistrer', editCancel:'Annuler',
-    delColTitle:'Supprimer cette colonne ?',
-    delColBody:'Toutes les sociétés de cette colonne seront supprimées. Cette action peut être annulée avec Ctrl+Z.',
-    delColConfirm:'Supprimer', delColCancel:'Annuler',
-    resetTitle:'Nouveau plan de chasse',
-    resetBody:'Le plan en cours sera effacé. Pense à exporter le JSON si tu veux le conserver.',
-    resetExport:'Exporter le JSON puis continuer', resetNoExport:'Continuer sans exporter', resetCancel:'Annuler',
-    exportTitle:'Exporter le plan de chasse', copyBtn:'Copier', copiedLbl:'Copié !', closeBtn:'Fermer',
-    restoreMsg:'Un plan de chasse a été sauvegardé automatiquement.', restoreBtn:'Reprendre', discardBtn:'Ignorer',
-    addCard:'+ Ajouter une société', namePlaceholder:'Nom de la société', reasonPlaceholder:'Argument de ciblage (optionnel)',
-    addConfirm:'Ajouter', addCancel:'Annuler',
-    dragPlaceholder:'Déposer ici',
-    colTag:['Cible 1','Cible 2','Cible 3'],
-    colTitle:['Concurrence Directe','Secteurs Connexes','Ouverture'],
-    colDesc:['Même secteur, profils identiques à la cible.','Compétences transférables, contexte proche.','Forte culture commerciale, profils adaptables.'],
-    badgeSociety:n => n>1 ? n+' sociétés' : n+' société',
-    uptooTooltip:'Client Uptoo — ne pas chasser',
-    uptooLabel:'Client Uptoo',
-    npcDeleteTitle:'Supprimer de la liste ?',
-    exportNpc:'Entreprises où ne pas chasser',
-    exportUptooSection:'Clients Uptoo (ne pas chasser)',
-  },
-  en: {
-    importTitle:'Hunting Plan',
-    importSub:'Generate and visualize your client mission hunting plan in seconds.',
-    step1Label:'Generate', step1Title:'Create a hunting plan',
-    step1Body:'Paste the mission brief into the Gem. It analyses the sector, identifies the best talent pools and selects 20 target companies across 3 segments.',
-    tag1:'Direct competition', tag2:'Adjacent sectors', tag3:'Stretch Targets',
-    gemCta:'Open Gem generator',
-    step2Label:'Import', step2Title:'Visualize the hunting plan',
-    step2Body:'Paste the JSON generated by the Gem below to automatically build the kanban for your client mission.',
-    loadBtn:'Load plan',
-    savedLbl:'Saved', undoBtn:'Undo',
-    exportTxtBtn:'Export plan', exportJsonBtn:'Export JSON', newPlanBtn:'New plan',
-    npcLabel:'Do not hunt', npcAdd:'Add', npcPlaceholder:'Company name', npcConfirm:'Add',
-    footerHint:'Drag & drop to reorganise · Hover a card to edit · Ctrl+Z to undo',
-    editTitle:'Edit company', editNameLbl:'Company name', editReasonLbl:'Targeting rationale',
-    editSave:'Save', editCancel:'Cancel',
-    delColTitle:'Delete this column?',
-    delColBody:'All companies in this column will be deleted. This action can be undone with Ctrl+Z.',
-    delColConfirm:'Delete', delColCancel:'Cancel',
-    resetTitle:'New hunting plan',
-    resetBody:'The current plan will be erased. Export the JSON first if you want to keep it.',
-    resetExport:'Export JSON then continue', resetNoExport:'Continue without exporting', resetCancel:'Cancel',
-    exportTitle:'Export hunting plan', copyBtn:'Copy', copiedLbl:'Copied!', closeBtn:'Close',
-    restoreMsg:'A hunting plan was automatically saved.', restoreBtn:'Resume', discardBtn:'Discard',
-    addCard:'+ Add company', namePlaceholder:'Company name', reasonPlaceholder:'Targeting rationale (optional)',
-    addConfirm:'Add', addCancel:'Cancel',
-    dragPlaceholder:'Drop here',
-    colTag:['Target 1','Target 2','Target 3'],
-    colTitle:['Direct Competition','Adjacent Sectors','Stretch Targets'],
-    colDesc:['Same sector, matching profiles.','Transferable skills, similar context.','Strong sales culture, profiles adaptable to new contexts.'],
-    badgeSociety:n => n>1 ? n+' companies' : n+' company',
-    uptooTooltip:'Uptoo client — do not hunt',
-    uptooLabel:'Uptoo client',
-    npcDeleteTitle:'Remove from list?',
-    exportNpc:'Companies not to hunt',
-    exportUptooSection:'Uptoo clients (do not hunt)',
-  }
-};
-
-let lang = 'fr'; // default
-
-function t(key){ return I18N[lang][key] || I18N['fr'][key] || key; }
-
-function toggleLang(){
-  lang = lang === 'fr' ? 'en' : 'fr';
-  document.getElementById('lang-track').classList.toggle('on', lang === 'en');
-  // If app is visible, also translate column defaults
-  if(document.getElementById('app-screen').style.display !== 'none'){
-    applyLangToColumns();
-    // Update DOM for col titles/descs that were translated
-    columns.forEach(col => {
-      const tEl = document.getElementById('title-' + col.seg);
-      const dEl = document.getElementById('desc-'  + col.seg);
-      if(tEl) tEl.textContent = col.title;
-      if(dEl) dEl.textContent = col.desc;
-    });
-    saveLocal();
-  }
-  applyI18N();
-}
-
-function applyI18N(){
-  const m = {
-    'txt-import-title':'importTitle','txt-import-sub':'importSub',
-    'txt-step1-label':'step1Label','txt-step1-title':'step1Title','txt-step1-body':'step1Body',
-    'txt-tag1':'tag1','txt-tag2':'tag2','txt-tag3':'tag3','txt-gem-cta':'gemCta',
-    'txt-step2-label':'step2Label','txt-step2-title':'step2Title','txt-step2-body':'step2Body',
-    'txt-load-btn':'loadBtn','txt-saved':'savedLbl','txt-undo-btn':'undoBtn',
-    'btn-export-txt-lbl':'exportTxtBtn','btn-export-json-lbl':'exportJsonBtn',
-    'txt-new-plan':'newPlanBtn','txt-npc-label':'npcLabel','txt-npc-add':'npcAdd',
-    'txt-npc-confirm-btn':'npcConfirm','txt-footer-hint':'footerHint',
-    'txt-edit-title':'editTitle','txt-edit-name-lbl':'editNameLbl','txt-edit-reason-lbl':'editReasonLbl',
-    'txt-edit-save-btn':'editSave','txt-edit-cancel-btn':'editCancel',
-    'txt-del-col-title':'delColTitle','txt-del-col-body':'delColBody',
-    'txt-del-col-confirm':'delColConfirm','txt-del-col-cancel':'delColCancel',
-    'txt-reset-title':'resetTitle','txt-reset-body':'resetBody',
-    'txt-reset-export':'resetExport','txt-reset-noexport':'resetNoExport','txt-reset-cancel':'resetCancel',
-    'txt-export-title':'exportTitle','txt-copy-btn':'copyBtn','txt-copied':'copiedLbl','txt-close-btn':'closeBtn',
-    'txt-restore-msg':'restoreMsg','btn-restore-lbl':'restoreBtn','btn-discard-lbl':'discardBtn',
-  };
-  for(const [id,key] of Object.entries(m)){
-    const el = document.getElementById(id);
-    if(el) el.textContent = t(key);
-  }
-  // npc placeholder
-  const npcIn = document.getElementById('npc-input');
-  if(npcIn) npcIn.placeholder = t('npcPlaceholder');
-  // drag placeholder text (via CSS — injected via dataset)
-  document.querySelectorAll('.drag-placeholder').forEach(p=>{ p.dataset.label = t('dragPlaceholder'); });
-  // rerender for labels
-  renderAll();
-}
-
-// ══════════════════════════════════════
-// STATE
-// ══════════════════════════════════════
-// columns: array of {seg, title, desc} — allows dynamic deletion
-let columns = [
-  {seg:'Direct',   title:'Concurrence Directe', desc:'Même secteur, profils identiques à la cible.'},
-  {seg:'Connexe',  title:'Secteurs Connexes',   desc:'Compétences transférables, contexte proche.'},
-  {seg:'Ouverture',title:'Ouverture',            desc:'Forte culture commerciale, profils adaptables.'},
-];
-let state = {jobTitle:'',clientName:'',location:'',companies:[]};
+let state = { jobTitle:'', clientName:'', location:'', companies:[] };
 let npcList = [];
 let dragCardId = null, dragGhost = null, dragOffsetX = 0, dragOffsetY = 0;
 let idCtr = 0;
 
-// ── UNDO STACK ──
-const MAX_UNDO = 50;
-let undoStack = [];
+const DEMO = {"jobTitle":"Responsable Commercial Abonnement (B2B)","clientName":"Batiactu Groupe","location":"Boulogne-Billancourt","targetCompanies":[{"name":"Le Moniteur (Infopro Digital)","segment":"Direct","reason":"Concurrent direct sur l'information BTP et les abonnements premium."},{"name":"Business Immo","segment":"Direct","reason":"Expertise média immobilier et interlocuteurs Grands Comptes identiques."},{"name":"Groupe Revue Fiduciaire","segment":"Direct","reason":"Maîtrise de la vente d'abonnements de veille réglementaire complexe."},{"name":"Explore","segment":"Connexe","reason":"Spécialiste de la data projet construction, vente de solutions de veille."},{"name":"Sparklane","segment":"Connexe","reason":"Vente d'intelligence commerciale en mode SaaS / Abonnement."},{"name":"Vecteur Plus","segment":"Connexe","reason":"Leader de la veille commerciale BTP, profils chasseurs confirmés."},{"name":"Welcome to the Jungle","segment":"Ouverture","reason":"Culture de vente d'abonnements digitaux et excellente approche commerciale."},{"name":"Docusign","segment":"Ouverture","reason":"Vente de solutions dématérialisées en mode SaaS à forte valeur."},{"name":"Cegid","segment":"Ouverture","reason":"Gros vivier de commerciaux SaaS structurés à Boulogne-Billancourt."}]};
 
-function snapshot(){
-  return JSON.stringify({
-    columns: columns.map(c=>({...c})),
-    state: {
-      ...state,
-      companies: state.companies.map(c=>({...c}))
-    },
-    npcList: [...npcList],
-    idCtr,
-    // col labels from DOM
-    colTitles: Object.fromEntries(columns.map(c=>{
-      const el = document.getElementById('title-'+c.seg);
-      return [c.seg, el ? el.textContent.trim() : c.title];
-    })),
-    colDescs: Object.fromEntries(columns.map(c=>{
-      const el = document.getElementById('desc-'+c.seg);
-      return [c.seg, el ? el.textContent.trim() : c.desc];
-    })),
-  });
-}
-
-function pushUndo(){
-  undoStack.push(snapshot());
-  if(undoStack.length > MAX_UNDO) undoStack.shift();
-  document.getElementById('btn-undo').disabled = false;
-}
-
-function undo(){
-  if(!undoStack.length) return;
-  const prev = JSON.parse(undoStack.pop());
-  columns = prev.columns;
-  state = prev.state;
-  npcList = prev.npcList;
-  idCtr = prev.idCtr;
-  document.getElementById('btn-undo').disabled = undoStack.length === 0;
-  renderAll();
-  // restore col titles/descs
-  columns.forEach(c=>{
-    const tEl = document.getElementById('title-'+c.seg);
-    const dEl = document.getElementById('desc-'+c.seg);
-    if(tEl && prev.colTitles?.[c.seg]) tEl.textContent = prev.colTitles[c.seg];
-    if(dEl && prev.colDescs?.[c.seg])  dEl.textContent = prev.colDescs[c.seg];
-  });
-  renderNpc();
-  saveLocal();
-}
-
-// ══════════════════════════════════════
-// DEMO DATA
-// ══════════════════════════════════════
-const DEMO = {"jobTitle":"Responsable Commercial Abonnement (B2B)","clientName":"Batiactu Groupe","location":"Boulogne-Billancourt","targetCompanies":[{"name":"Le Moniteur (Infopro Digital)","segment":"Direct","reason":"Concurrent direct sur l'information BTP."},{"name":"Business Immo","segment":"Direct","reason":"Expertise média immobilier."},{"name":"Groupe Revue Fiduciaire","segment":"Direct","reason":"Vente d'abonnements complexes."},{"name":"Construction Cayola","segment":"Direct","reason":"Éditeur spécialisé BTP."},{"name":"Explore","segment":"Connexe","reason":"Spécialiste data construction."},{"name":"Sparklane","segment":"Connexe","reason":"Vente SaaS / Abonnement."},{"name":"Vecteur Plus","segment":"Connexe","reason":"Veille commerciale BTP."},{"name":"Welcome to the Jungle","segment":"Ouverture","reason":"Culture abonnements digitaux."},{"name":"Docusign","segment":"Ouverture","reason":"SaaS à forte valeur."},{"name":"Cegid","segment":"Ouverture","reason":"Commerciaux SaaS structurés."}]};
-
-// ══════════════════════════════════════
-// LOGO
-// ══════════════════════════════════════
 const LOGO_B64 = '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xza6jIg9JUDfqCK7yjrXRTxdamrRkYyoU56tHmr/AA0vh/q7+3b/AHlYfyzTk+Gl2f8AWajCv+7GT/MivSKK2/tKvbf8DP6nSOGt/hrZp/x8388h/wCmahB+ua6jR9GtNEtWt7NWCM287myScAf0FaFLWFXFVai5ZyujSFCnB3igooorA2CiiigCvdWVtexGK5gjmT+66giuZvfh7pNwS0DTWzdgrbl/I5/nXXUVrTrVKfwOxnOlCfxI85m+GdwP9TqUbD/biK/yJqD/AIVtqWf+P21/8e/wr0ylrpWY111/AxeDpM84h+Gly3+u1GJP9yMt/UVr2fw70qAhrmWe5I6qW2qfwHP612FJUyx9eXW3oVHC0l0K1lp9pp8fl2ltHCncIoGfr61aoorkcnJ3k7s3SSVkFFFFIYUUUUAFFFFABRRRQAjKHUqwBB6g1z+oeC9FvyWNt5Dn+KA7f06fpXQ0lXCpOm7xdiJQjJWkjgLj4Zgkm21IgdlkiyfzBH8qpn4a6iPu3tsfqG/wr0yjFdSzGula9/kYPCUn0PNI/hrfEjffW6j/AGVJP9K0bb4a2qHN1fzSj0jQJ/Mmu6oolmFd7Ow1hKS6GTpvhzSdLIa1s0Eg6SMNzfmela1JS1yTqSm7ydzeMIx0igoooqSgpRSUooAKKKKAEooooAKKKKACiiigAooooAKKKKACiiigAqC+/wCPC5/65N/I1PUF9/x4XP8A1yb+RoA+O6KKK9FHOSQf8fEf+8P519j18cQf8fEf+8P519j1z4joaU+oUUUVzGgUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFKKSlFABRRRQAlFLijFACUUuKMUAJRS4oxQAlFLijFACUUuKMUAJRS4oxQAlQX3/AB4XP/XJv5GrGKZLGJoXiYkK6lTjrg0AfG1FfQH/AAo3wz/z/av/AN/o/wD43R/wo3wz/wA/2r/9/o//AI3Xb7aHcx5WeBwf8fEf+8P519j15qvwQ8NI6sL7Vsqc/wCtj/8Ajdel4rGtOMrWLgmtxKKXFGKwLEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASilxRigBKKXFGKAEopcUYoASlFGKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//9k=';
 document.getElementById('logo-import').src = 'data:image/png;base64,' + LOGO_B64;
 document.getElementById('logo-app').src    = 'data:image/png;base64,' + LOGO_B64;
 
-// ══════════════════════════════════════
-// PARSE / LOAD
-// ══════════════════════════════════════
 function normSeg(s){
-  if(!s) return columns[0]?.seg || 'Direct';
+  if(!s) return 'Direct';
   const v = s.toLowerCase();
-  if(v.includes('direct')||v.includes('cible 1')||v.includes('target 1')) return 'Direct';
-  if(v.includes('connexe')||v.includes('cible 2')||v.includes('adjacent')||v.includes('target 2')) return 'Connexe';
-  if(v.includes('ouverture')||v.includes('cible 3')||v.includes('opening')||v.includes('target 3')) return 'Ouverture';
-  return columns[0]?.seg || 'Direct';
+  if(v.includes('direct')||v.includes('cible 1')) return 'Direct';
+  if(v.includes('connexe')||v.includes('cible 2')) return 'Connexe';
+  if(v.includes('ouverture')||v.includes('cible 3')) return 'Ouverture';
+  return 'Direct';
 }
 function parsePlan(raw){
   const d = JSON.parse(raw);
@@ -694,234 +471,91 @@ function parsePlan(raw){
   state.clientName = d.clientName || d.client || '';
   state.location   = d.location   || d.villes || '';
   const arr = d.targetCompanies || d.cibles || [];
-  state.companies = arr.map(c=>({
-    id:++idCtr, name:c.name||c.nom||'', segment:normSeg(c.segment),
-    reason:c.reason||c.argument||'', priority:c.priority||false, uptooClient:c.uptooClient||false
-  }));
+  state.companies = arr.map(c=>({id:++idCtr,name:c.name||c.nom||'',segment:normSeg(c.segment),reason:c.reason||c.argument||'',priority:c.priority||false}));
   if(d.npcList && Array.isArray(d.npcList)) npcList = d.npcList;
-  // restore custom col titles/descs
   if(d.colTitles){
-    columns.forEach(c=>{
-      const tEl = document.getElementById('title-'+c.seg);
-      const dEl = document.getElementById('desc-'+c.seg);
-      if(tEl && d.colTitles[c.seg]) tEl.textContent = d.colTitles[c.seg];
-      if(dEl && d.colDescs?.[c.seg]) dEl.textContent = d.colDescs[c.seg];
+    ['Direct','Connexe','Ouverture'].forEach(seg=>{
+      const t=document.getElementById('title-'+seg);
+      const desc=document.getElementById('desc-'+seg);
+      if(t && d.colTitles[seg]) t.textContent=d.colTitles[seg];
+      if(desc && d.colDescs?.[seg]) desc.textContent=d.colDescs[seg];
     });
   }
 }
-
 function loadPlan(){
-  const raw = document.getElementById('json-input').value.trim();
-  const err = document.getElementById('import-error');
-  try{ parsePlan(raw); err.style.display='none'; showApp(); }
-  catch(e){ err.style.display='block'; }
+  const raw=document.getElementById('json-input').value.trim();
+  const err=document.getElementById('import-error');
+  try{parsePlan(raw);err.style.display='none';showApp();}
+  catch(e){err.style.display='block';}
 }
-function getDefaultColumns(){
-  const titles = t('colTitle');
-  const descs  = t('colDesc');
-  return [
-    {seg:'Direct',   title:titles[0], desc:descs[0]},
-    {seg:'Connexe',  title:titles[1], desc:descs[1]},
-    {seg:'Ouverture',title:titles[2], desc:descs[2]},
-  ];
-}
-
 function showApp(){
-  // Reset columns with lang-aware defaults if needed
-  if(!columns.length) columns = getDefaultColumns();
-  // Apply lang to default column titles/descs (only if they still match FR defaults)
-  applyLangToColumns();
   document.getElementById('import-screen').style.display='none';
-  document.body.classList.add('app-open');
-  const app = document.getElementById('app-screen');
+  const app=document.getElementById('app-screen');
   app.style.display='flex';
-  document.getElementById('header-client').textContent = state.clientName || '—';
-  document.getElementById('header-poste').textContent  = [state.jobTitle,state.location].filter(Boolean).join(' · ') || '—';
-  renderAll();
-  renderNpc();
-  saveLocal();
+  document.getElementById('header-client').textContent=state.clientName||'—';
+  document.getElementById('header-poste').textContent=[state.jobTitle,state.location].filter(Boolean).join(' · ')||'—';
+  renderAll();renderNpc();saveLocal();
+}
+function resetToImport(){document.getElementById('confirm-reset-modal').classList.add('open');}
+function closeConfirmReset(){document.getElementById('confirm-reset-modal').classList.remove('open');}
+function exportThenReset(){exportJSON();closeConfirmReset();doReset();}
+function confirmReset(){closeConfirmReset();doReset();}
+function doReset(){
+  localStorage.removeItem(STORAGE_KEY);
+  state={jobTitle:'',clientName:'',location:'',companies:[]};
+  npcList=[];idCtr=0;dragCardId=null;
+  document.getElementById('app-screen').style.display='none';
+  document.getElementById('import-screen').style.display='flex';
+  document.getElementById('json-input').value='';
+  renderNpc();renderAll();
 }
 
-// Default FR values to detect if title/desc hasn't been customised
-const DEFAULT_COL_TITLES_FR = ['Concurrence Directe','Secteurs Connexes','Ouverture'];
-const DEFAULT_COL_DESCS_FR  = [
-  'Même secteur, profils identiques à la cible.',
-  'Compétences transférables, contexte proche.',
-  'Forte culture commerciale, profils adaptables.'
-];
-const DEFAULT_COL_TITLES_EN = ['Direct Competition','Adjacent Sectors','Stretch Targets'];
-const DEFAULT_COL_DESCS_EN  = [
-  'Same sector, matching profiles.',
-  'Transferable skills, similar context.',
-  'Strong sales culture, profiles adaptable to new contexts.'
-];
-
-function applyLangToColumns(){
-  const segs = ['Direct','Connexe','Ouverture'];
-  const fromTitles = lang === 'en' ? DEFAULT_COL_TITLES_FR : DEFAULT_COL_TITLES_EN;
-  const fromDescs  = lang === 'en' ? DEFAULT_COL_DESCS_FR  : DEFAULT_COL_DESCS_EN;
-  const toTitles   = lang === 'en' ? DEFAULT_COL_TITLES_EN : DEFAULT_COL_TITLES_FR;
-  const toDescs    = lang === 'en' ? DEFAULT_COL_DESCS_EN  : DEFAULT_COL_DESCS_FR;
-  columns.forEach((col, i) => {
-    // Only translate if the current value is a known default (not customised)
-    if(col.title === fromTitles[i] || col.title === toTitles[i]) col.title = toTitles[i];
-    if(col.desc  === fromDescs[i]  || col.desc  === toDescs[i])  col.desc  = toDescs[i];
-  });
-}
-
-// ══════════════════════════════════════
-// COLUMN DELETE
-// ══════════════════════════════════════
-let pendingDeleteSeg = null;
-function openDeleteCol(seg){
-  pendingDeleteSeg = seg;
-  document.getElementById('confirm-col-modal').classList.add('open');
-}
-function closeConfirmCol(){
-  document.getElementById('confirm-col-modal').classList.remove('open');
-  pendingDeleteSeg = null;
-}
-function confirmDeleteCol(){
-  if(!pendingDeleteSeg) return;
-  pushUndo();
-  const seg = pendingDeleteSeg;
-  columns = columns.filter(c=>c.seg !== seg);
-  state.companies = state.companies.filter(c=>c.segment !== seg);
-  closeConfirmCol();
-  renderAll();
-  saveLocal();
-}
-
-// ══════════════════════════════════════
-// RENDER
-// ══════════════════════════════════════
-function renderAll(){
-  const board = document.getElementById('kanban-board');
-  // Rebuild columns from scratch each time to support dynamic deletion
-  const segClasses = {Direct:'seg-direct',Connexe:'seg-connexe',Ouverture:'seg-ouverture'};
-  const segIdx = {Direct:0,Connexe:1,Ouverture:2};
-
-  // Remove columns that no longer exist, add new ones
-  const existingSeg = [...board.querySelectorAll('.k-col')].map(el=>el.dataset.seg);
-  const wantedSeg = columns.map(c=>c.seg);
-
-  // Remove stale
-  existingSeg.filter(s=>!wantedSeg.includes(s)).forEach(s=>{
-    const el = board.querySelector(`.k-col[data-seg="${s}"]`);
-    if(el) el.remove();
-  });
-
-  // Build/update each column in order
-  columns.forEach((col,i)=>{
-    let colEl = board.querySelector(`.k-col[data-seg="${col.seg}"]`);
-    const cls = segClasses[col.seg] || 'seg-direct';
-    const idx = segIdx[col.seg] ?? i;
-    const tagLbl = t('colTag')[idx] || `Cible ${i+1}`;
-
-    if(!colEl){
-      colEl = document.createElement('div');
-      colEl.className = `k-col ${cls}`;
-      colEl.dataset.seg = col.seg;
-      colEl.innerHTML = `
-        <div class="col-head">
-          <button class="btn-del-col" onclick="openDeleteCol('${col.seg}')" title="${t('delColTitle')}">✕</button>
-          <div class="col-tag">${tagLbl}</div>
-          <div class="col-title-row">
-            <span class="col-title" id="title-${col.seg}" contenteditable="true" spellcheck="false">${esc(col.title)}</span>
-            <span class="col-count" id="counter-${col.seg}">0</span>
-          </div>
-          <div class="col-desc" id="desc-${col.seg}" contenteditable="true" spellcheck="false">${esc(col.desc)}</div>
-        </div>
-        <div class="cards-zone" id="zone-${col.seg}"></div>`;
-      board.appendChild(colEl);
-    } else {
-      // Update tag label
-      const tagEl = colEl.querySelector('.col-tag');
-      if(tagEl) tagEl.textContent = tagLbl;
-    }
-
-    // Ensure col is in right DOM position
-    const children = [...board.children];
-    if(children.indexOf(colEl) !== i){
-      board.insertBefore(colEl, board.children[i] || null);
-    }
-
-    // Render cards
-    renderCards(col.seg);
-  });
-
-  updateCount();
-  attachDragListeners();
-}
-
-function renderCards(seg){
-  const zone = document.getElementById('zone-'+seg);
-  if(!zone) return;
-  const cards = state.companies.filter(c=>c.segment===seg);
-  let html = '';
-  cards.forEach(c=>{ html += cardHTML(c,seg); });
-  html += `<button class="add-btn" onclick="openAdd('${seg}')">${t('addCard')}</button>`;
-  html += `<div class="add-form" id="af-${seg}">
-    <input type="text" id="an-${seg}" placeholder="${t('namePlaceholder')}"
-      onkeydown="if(event.key==='Enter'){event.preventDefault();confirmAdd('${seg}');} if(event.key==='Escape') closeAdd('${seg}');">
-    <textarea rows="2" id="ar-${seg}" placeholder="${t('reasonPlaceholder')}"
-      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();confirmAdd('${seg}');} if(event.key==='Escape') closeAdd('${seg}');"></textarea>
+function renderAll(){['Direct','Connexe','Ouverture'].forEach(renderCol);updateCount();attachDragListeners();}
+function renderCol(seg){
+  const zone=document.getElementById('zone-'+seg);
+  const cards=state.companies.filter(c=>c.segment===seg);
+  let html='';
+  cards.forEach(c=>{html+=cardHTML(c);});
+  html+=`<button class="add-btn" onclick="openAdd('${seg}')">+ Ajouter une société</button>`;
+  html+=`<div class="add-form" id="af-${seg}">
+    <input type="text" id="an-${seg}" placeholder="Nom de la société" onkeydown="if(event.key==='Enter'){event.preventDefault();confirmAdd('${seg}');} if(event.key==='Escape') closeAdd('${seg}');">
+    <textarea rows="2" id="ar-${seg}" placeholder="Argument de ciblage (optionnel)" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();confirmAdd('${seg}');} if(event.key==='Escape') closeAdd('${seg}');"></textarea>
     <div class="add-form-btns">
-      <button class="btn-confirm" onclick="confirmAdd('${seg}')">${t('addConfirm')}</button>
-      <button class="btn-cancel"  onclick="closeAdd('${seg}')">${t('addCancel')}</button>
+      <button class="btn-confirm" onclick="confirmAdd('${seg}')">Ajouter</button>
+      <button class="btn-cancel" onclick="closeAdd('${seg}')">Annuler</button>
     </div>
   </div>`;
-  zone.innerHTML = html;
-  document.getElementById('counter-'+seg).textContent = cards.length;
+  zone.innerHTML=html;
+  document.getElementById('counter-'+seg).textContent=cards.length;
 }
-
-function cardHTML(c, seg){
-  const priClass    = c.priority    ? ' priority'     : '';
-  const uptooClass  = c.uptooClient ? ' uptoo-client'  : '';
-  const hasActive   = (c.priority || c.uptooClient) ? ' has-active' : '';
-  const starClass   = c.priority    ? ' active'       : '';
-  const starIcon    = c.priority    ? '★' : '☆';
-  const uptooActive = c.uptooClient ? ' active'       : '';
-  const uptooSvg = `<svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>`;
-  const uptooTooltip = t('uptooTooltip');
-  const badge = c.uptooClient
-    ? `<div class="uptoo-client-badge">${uptooSvg} ${t('uptooLabel')}</div>`
-    : '';
-  return `<div class="company-card${priClass}${uptooClass}" data-id="${c.id}">
+function cardHTML(c){
+  const priClass=c.priority?' priority':'';
+  const actionsClass=c.priority?' has-active':'';
+  const starBtnClass=c.priority?' active':'';
+  const starIcon=c.priority?'★':'☆';
+  return `<div class="company-card${priClass}" data-id="${c.id}">
     <div class="card-name">${esc(c.name)}</div>
-    ${c.reason ? `<div class="card-reason">${esc(c.reason)}</div>` : ''}
-    ${badge}
-    <div class="card-actions${hasActive}">
-      <button class="card-btn" onclick="openEdit(${c.id})" title="${t('editTitle')}">✎</button>
+    ${c.reason?`<div class="card-reason">${esc(c.reason)}</div>`:''}
+    <div class="card-actions${actionsClass}">
+      <button class="card-btn" onclick="openEdit(${c.id})" title="Modifier">✎</button>
       <button class="card-btn del" onclick="deleteCard(${c.id})" title="Supprimer">✕</button>
-      <button class="card-btn card-star${starClass}" onclick="togglePriority(${c.id})" title="Cible prioritaire">${starIcon}</button>
-      <button class="card-btn card-uptoo${uptooActive}" onclick="toggleUptoo(${c.id})" title="${uptooTooltip}">U</button>
+      <button class="card-btn card-star${starBtnClass}" onclick="togglePriority(${c.id})" title="Cible prioritaire">${starIcon}</button>
     </div>
   </div>`;
 }
-
 function updateCount(){
-  const n = state.companies.length;
-  document.getElementById('total-count').textContent = t('badgeSociety')(n);
+  const n=state.companies.length;
+  document.getElementById('total-count').textContent=n+(n>1?' sociétés':' société');
 }
-
-// ══════════════════════════════════════
-// ADD CARD
-// ══════════════════════════════════════
-function openAdd(seg){ const f=document.getElementById('af-'+seg);if(f){f.classList.add('open');document.getElementById('an-'+seg).focus();} }
-function closeAdd(seg){ const f=document.getElementById('af-'+seg);if(f){f.classList.remove('open');document.getElementById('an-'+seg).value='';document.getElementById('ar-'+seg).value='';} }
+function openAdd(seg){const f=document.getElementById('af-'+seg);if(f){f.classList.add('open');document.getElementById('an-'+seg).focus();}}
+function closeAdd(seg){const f=document.getElementById('af-'+seg);if(f){f.classList.remove('open');document.getElementById('an-'+seg).value='';document.getElementById('ar-'+seg).value='';}}
 function confirmAdd(seg){
   const n=(document.getElementById('an-'+seg)||{}).value?.trim();
   if(!n){document.getElementById('an-'+seg)?.focus();return;}
   const r=(document.getElementById('ar-'+seg)||{}).value?.trim()||'';
-  pushUndo();
-  state.companies.push({id:++idCtr,name:n,segment:seg,reason:r,priority:false,uptooClient:false});
-  closeAdd(seg); renderCards(seg); updateCount(); saveLocal();
+  state.companies.push({id:++idCtr,name:n,segment:seg,reason:r,priority:false});
+  closeAdd(seg);renderCol(seg);updateCount();saveLocal();
 }
-
-// ══════════════════════════════════════
-// EDIT CARD
-// ══════════════════════════════════════
 function openEdit(id){
   const c=state.companies.find(x=>x.id===id);if(!c)return;
   document.getElementById('edit-id').value=id;
@@ -934,394 +568,176 @@ function saveEdit(){
   const id=parseInt(document.getElementById('edit-id').value);
   const name=document.getElementById('edit-name').value.trim();
   if(!name)return;
-  pushUndo();
   const c=state.companies.find(x=>x.id===id);
   if(c){c.name=name;c.reason=document.getElementById('edit-reason').value.trim();}
-  closeModal(); renderAll(); saveLocal();
+  closeModal();renderAll();saveLocal();
 }
-function closeModal(){ document.getElementById('edit-modal').classList.remove('open'); }
+function closeModal(){document.getElementById('edit-modal').classList.remove('open');}
 document.getElementById('edit-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
-// ══════════════════════════════════════
-// PRIORITY & UPTOO CLIENT
-// ══════════════════════════════════════
 function togglePriority(id){
-  pushUndo();
   const c=state.companies.find(x=>x.id===id);
   if(c){c.priority=!c.priority;renderAll();saveLocal();}
 }
-function toggleUptoo(id){
-  pushUndo();
-  const c=state.companies.find(x=>x.id===id);
-  if(c){c.uptooClient=!c.uptooClient;renderAll();saveLocal();}
-}
+function deleteCard(id){state.companies=state.companies.filter(c=>c.id!==id);renderAll();saveLocal();}
 
-// ══════════════════════════════════════
-// DELETE CARD
-// ══════════════════════════════════════
-function deleteCard(id){
-  pushUndo();
-  state.companies=state.companies.filter(c=>c.id!==id);
-  renderAll();saveLocal();
-}
-
-// ══════════════════════════════════════
-// DRAG (mouse-based)
-// ══════════════════════════════════════
-function removePlaceholder(){ document.querySelectorAll('.drag-placeholder').forEach(p=>p.remove()); }
-
+function removePlaceholder(){document.querySelectorAll('.drag-placeholder').forEach(p=>p.remove());}
 function insertPlaceholder(zone,beforeEl){
   removePlaceholder();
-  const ph=document.createElement('div');
-  ph.className='drag-placeholder';
-  ph.textContent = t('dragPlaceholder');
+  const ph=document.createElement('div');ph.className='drag-placeholder';
   if(beforeEl) zone.insertBefore(ph,beforeEl);
-  else {
-    const addBtn=zone.querySelector('.add-btn');
-    if(addBtn) zone.insertBefore(ph,addBtn);
-    else zone.appendChild(ph);
-  }
+  else{const addBtn=zone.querySelector('.add-btn');if(addBtn)zone.insertBefore(ph,addBtn);else zone.appendChild(ph);}
 }
-
 function getSegFromPoint(x,y){
-  for(const col of columns){
-    const el=document.getElementById('col-'+col.seg);
-    if(!el)continue;
+  for(const seg of ['Direct','Connexe','Ouverture']){
+    const el=document.getElementById('col-'+seg);if(!el)continue;
     const r=el.getBoundingClientRect();
-    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom) return col.seg;
-  }
-  return null;
+    if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return seg;
+  }return null;
 }
-
 function getInsertPosition(seg,y){
-  const zone=document.getElementById('zone-'+seg);
-  if(!zone)return null;
+  const zone=document.getElementById('zone-'+seg);if(!zone)return null;
   const cards=[...zone.querySelectorAll('.company-card:not(.drag-source)')];
-  for(const card of cards){
-    const r=card.getBoundingClientRect();
-    if(y<r.top+r.height/2) return {zone,beforeEl:card};
-  }
-  return {zone,beforeEl:null};
+  for(const card of cards){const r=card.getBoundingClientRect();if(y<r.top+r.height/2)return{zone,beforeEl:card};}
+  return{zone,beforeEl:null};
 }
-
 function attachDragListeners(){
   document.querySelectorAll('.company-card').forEach(card=>{
     card.removeEventListener('mousedown',onCardMouseDown);
     card.addEventListener('mousedown',onCardMouseDown);
   });
 }
-
 function onCardMouseDown(e){
-  if(e.target.closest('.card-actions')) return;
+  if(e.target.closest('.card-actions'))return;
   e.preventDefault();
-  const card=e.currentTarget;
-  dragCardId=parseInt(card.dataset.id);
-  const r=card.getBoundingClientRect();
-  dragOffsetX=e.clientX-r.left; dragOffsetY=e.clientY-r.top;
+  const card=e.currentTarget;dragCardId=parseInt(card.dataset.id);
+  const r=card.getBoundingClientRect();dragOffsetX=e.clientX-r.left;dragOffsetY=e.clientY-r.top;
   dragGhost=card.cloneNode(true);
   dragGhost.style.cssText=`position:fixed;z-index:9999;pointer-events:none;width:${r.width}px;opacity:.85;left:${r.left}px;top:${r.top}px;box-shadow:0 8px 24px rgba(0,0,0,.18);border-radius:8px;transform:rotate(1.5deg);`;
-  document.body.appendChild(dragGhost);
-  card.classList.add('drag-source');
-  document.addEventListener('mousemove',onMouseMove);
-  document.addEventListener('mouseup',onMouseUp);
+  document.body.appendChild(dragGhost);card.classList.add('drag-source');
+  document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);
 }
-
 function onMouseMove(e){
   if(!dragGhost)return;
-  dragGhost.style.left=(e.clientX-dragOffsetX)+'px';
-  dragGhost.style.top=(e.clientY-dragOffsetY)+'px';
+  dragGhost.style.left=(e.clientX-dragOffsetX)+'px';dragGhost.style.top=(e.clientY-dragOffsetY)+'px';
   document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
   const seg=getSegFromPoint(e.clientX,e.clientY);
   if(seg){
     document.getElementById('col-'+seg).classList.add('drag-over');
-    const pos=getInsertPosition(seg,e.clientY);
-    if(pos) insertPlaceholder(pos.zone,pos.beforeEl);
-    const zone=document.getElementById('zone-'+seg);
-    if(zone){
-      const zr=zone.getBoundingClientRect();
-      if(e.clientY<zr.top+60) zone.scrollTop-=8;
-      else if(e.clientY>zr.bottom-60) zone.scrollTop+=8;
-    }
-  } else { removePlaceholder(); }
+    const pos=getInsertPosition(seg,e.clientY);if(pos)insertPlaceholder(pos.zone,pos.beforeEl);
+    const zone=document.getElementById('zone-'+seg);if(zone){const zr=zone.getBoundingClientRect();if(e.clientY<zr.top+60)zone.scrollTop-=8;else if(e.clientY>zr.bottom-60)zone.scrollTop+=8;}
+  }else{removePlaceholder();}
 }
-
 function onMouseUp(e){
-  document.removeEventListener('mousemove',onMouseMove);
-  document.removeEventListener('mouseup',onMouseUp);
+  document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);
   if(dragGhost){dragGhost.remove();dragGhost=null;}
   document.querySelectorAll('.drag-source').forEach(c=>c.classList.remove('drag-source'));
   document.querySelectorAll('.k-col').forEach(c=>c.classList.remove('drag-over'));
   const seg=getSegFromPoint(e.clientX,e.clientY);
   if(!seg||dragCardId===null){removePlaceholder();dragCardId=null;return;}
-  const pos=getInsertPosition(seg,e.clientY);
-  removePlaceholder();
-  const draggedCard=state.companies.find(x=>x.id===dragCardId);
-  if(!draggedCard){dragCardId=null;return;}
-  pushUndo();
-  draggedCard.segment=seg;
-  state.companies=state.companies.filter(x=>x.id!==dragCardId);
-  if(pos&&pos.beforeEl){
-    const beforeId=parseInt(pos.beforeEl.dataset.id);
-    const idx=state.companies.findIndex(x=>x.id===beforeId);
-    if(idx!==-1) state.companies.splice(idx,0,draggedCard);
-    else state.companies.push(draggedCard);
-  } else {
-    let lastIdx=-1;
-    state.companies.forEach((c,i)=>{if(c.segment===seg) lastIdx=i;});
-    state.companies.splice(lastIdx+1,0,draggedCard);
-  }
-  dragCardId=null;
-  renderAll(); saveLocal(); attachDragListeners();
+  const pos=getInsertPosition(seg,e.clientY);removePlaceholder();
+  const draggedCard=state.companies.find(x=>x.id===dragCardId);if(!draggedCard){dragCardId=null;return;}
+  draggedCard.segment=seg;state.companies=state.companies.filter(x=>x.id!==dragCardId);
+  if(pos&&pos.beforeEl){const beforeId=parseInt(pos.beforeEl.dataset.id);const idx=state.companies.findIndex(x=>x.id===beforeId);if(idx!==-1)state.companies.splice(idx,0,draggedCard);else state.companies.push(draggedCard);}
+  else{let lastIdx=-1;state.companies.forEach((c,i)=>{if(c.segment===seg)lastIdx=i;});state.companies.splice(lastIdx+1,0,draggedCard);}
+  dragCardId=null;renderAll();saveLocal();attachDragListeners();
 }
 
-// ══════════════════════════════════════
-// NPC
-// ══════════════════════════════════════
 function renderNpc(){
   const zone=document.getElementById('npc-tags');
-  zone.innerHTML=npcList.map((n,i)=>
-    `<span class="npc-tag">${esc(n)}<button onclick="removeNpc(${i})" title="✕">✕</button></span>`
-  ).join('');
+  zone.innerHTML=npcList.map((n,i)=>`<span class="npc-tag">${esc(n)}<button onclick="removeNpc(${i})" title="Supprimer">✕</button></span>`).join('');
 }
-function openNpcInput(){
-  document.getElementById('npc-add-btn').style.display='none';
-  document.getElementById('npc-input-wrap').classList.add('open');
-  document.getElementById('npc-input').focus();
-}
-function closeNpcInput(){
-  document.getElementById('npc-add-btn').style.display='';
-  document.getElementById('npc-input-wrap').classList.remove('open');
-  document.getElementById('npc-input').value='';
-}
-function confirmNpc(){
-  const v=document.getElementById('npc-input').value.trim();
-  if(!v)return;
-  pushUndo();
-  npcList.push(v);
-  closeNpcInput(); renderNpc(); saveLocal();
-}
-function removeNpc(i){ pushUndo(); npcList.splice(i,1); renderNpc(); saveLocal(); }
-function npcKeydown(e){ if(e.key==='Enter'){e.preventDefault();confirmNpc();} if(e.key==='Escape') closeNpcInput(); }
+function openNpcInput(){document.getElementById('npc-add-btn').style.display='none';document.getElementById('npc-input-wrap').classList.add('open');document.getElementById('npc-input').focus();}
+function closeNpcInput(){document.getElementById('npc-add-btn').style.display='';document.getElementById('npc-input-wrap').classList.remove('open');document.getElementById('npc-input').value='';}
+function confirmNpc(){const v=document.getElementById('npc-input').value.trim();if(!v)return;npcList.push(v);closeNpcInput();renderNpc();saveLocal();}
+function removeNpc(i){npcList.splice(i,1);renderNpc();saveLocal();}
+function npcKeydown(e){if(e.key==='Enter'){e.preventDefault();confirmNpc();}if(e.key==='Escape')closeNpcInput();}
 
-// ══════════════════════════════════════
-// EXPORT
-// ══════════════════════════════════════
 function exportJSON(){
-  const colTitles={},colDescs={};
-  columns.forEach(c=>{
-    const tEl=document.getElementById('title-'+c.seg);
-    const dEl=document.getElementById('desc-'+c.seg);
-    colTitles[c.seg]=tEl?tEl.textContent.trim():c.title;
-    colDescs[c.seg]=dEl?dEl.textContent.trim():c.desc;
-  });
-  const out={
-    jobTitle:state.jobTitle,clientName:state.clientName,location:state.location,
-    lang, colTitles, colDescs, npcList,
-    targetCompanies:state.companies.map(c=>({
-      name:c.name,segment:c.segment,reason:c.reason,
-      priority:c.priority||false,uptooClient:c.uptooClient||false
-    }))
-  };
+  const colTitles={Direct:document.getElementById('title-Direct')?.textContent.trim()||'Concurrence Directe',Connexe:document.getElementById('title-Connexe')?.textContent.trim()||'Secteurs Connexes',Ouverture:document.getElementById('title-Ouverture')?.textContent.trim()||'Ouverture'};
+  const colDescs={Direct:document.getElementById('desc-Direct')?.textContent.trim()||'',Connexe:document.getElementById('desc-Connexe')?.textContent.trim()||'',Ouverture:document.getElementById('desc-Ouverture')?.textContent.trim()||''};
+  const out={jobTitle:state.jobTitle,clientName:state.clientName,location:state.location,colTitles,colDescs,npcList,
+    targetCompanies:state.companies.map(c=>({name:c.name,segment:c.segment,reason:c.reason,priority:c.priority||false}))};
   const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download=`plan-chasse-${(state.clientName||'uptoo').replace(/\s+/g,'-').toLowerCase()}.json`;
-  a.click();
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`plan-chasse-${(state.clientName||'uptoo').replace(/\s+/g,'-').toLowerCase()}.json`;a.click();
 }
-
 function openExportTexte(){
+  const segs=['Direct','Connexe','Ouverture'];
   let txt='';
-  columns.forEach((col,i)=>{
-    const tEl=document.getElementById('title-'+col.seg);
-    const title=tEl?tEl.textContent.trim():col.title;
-    const label=t('colTag')[i]||`Cible ${i+1}`;
-    const companies=state.companies.filter(c=>c.segment===col.seg)
-      .map(c=>(c.priority?'⭐ ':'')+c.name+(c.uptooClient?' ['+t('uptooLabel')+']':''));
-    txt+=`${label} : "${title}"\n`;
-    txt+=companies.length?companies.join(', '):'(–)';
-    txt+='\n\n';
+  segs.forEach(seg=>{
+    const titleEl=document.getElementById('title-'+seg);
+    const title=titleEl?titleEl.textContent.trim():seg;
+    const label=seg==='Direct'?'Cible 1':seg==='Connexe'?'Cible 2':'Cible 3';
+    const companies=state.companies.filter(c=>c.segment===seg).map(c=>(c.priority?'⭐ ':'')+c.name);
+    txt+=`${label} : "${title}"\n`;txt+=companies.length?companies.join(', '):'(aucune entreprise)';txt+='\n\n';
   });
-  if(npcList.length) txt+=`${t('exportNpc')} :\n${npcList.join(', ')}\n\n`;
-  const uptoo=state.companies.filter(c=>c.uptooClient).map(c=>c.name);
-  if(uptoo.length) txt+=`${t('exportUptooSection')} :\n${uptoo.join(', ')}`;
+  if(npcList.length)txt+=`Entreprises où ne pas chasser :\n${npcList.join(', ')}`;
   document.getElementById('export-raw').value=txt.trim();
   const htmlLines=txt.trim().split('\n').map(line=>{
-    if(!line.trim()) return '<div style="height:8px"></div>';
-    if(/^(Cible|Target)\s*\d+\s*:/.test(line)||/^(Entreprises|Companies|Clients)/.test(line))
-      return `<div><strong style="font-weight:700;color:#000">${esc(line)}</strong></div>`;
-    return `<div>${esc(line)}</div>`;
+    if(line.trim()==='')return'<div style="height:8px"></div>';
+    if(/^Cible \d+\s*:/.test(line)||/^Entreprises où ne pas chasser/.test(line))return`<div><strong style="font-weight:700;color:#000;">${esc(line)}</strong></div>`;
+    return`<div>${esc(line)}</div>`;
   }).join('');
   document.getElementById('export-content').innerHTML=htmlLines;
   document.getElementById('export-modal').classList.add('open');
   document.getElementById('copy-ok').classList.remove('show');
 }
-function closeExportModal(){ document.getElementById('export-modal').classList.remove('open'); }
+function closeExportModal(){document.getElementById('export-modal').classList.remove('open');}
 async function copyExport(){
-  const ta=document.getElementById('export-raw');
-  const plain=ta.value;
+  const ta=document.getElementById('export-raw');const plain=ta.value;
   const html=plain.split('\n').map(line=>{
-    if(/^(Cible|Target)\s*\d+\s*:/.test(line)||/^(Entreprises|Companies|Clients)/.test(line))
-      return `<strong>${esc(line)}</strong>`;
+    if(/^Cible \d+\s*:/.test(line)||/^Entreprises où ne pas chasser/.test(line))return`<strong>${esc(line)}</strong>`;
     return esc(line)||'&nbsp;';
   }).join('<br>');
   if(typeof ClipboardItem!=='undefined'&&navigator.clipboard?.write){
-    try{
-      const hBlob=new Blob([`<!DOCTYPE html><html><body><div style="font-family:sans-serif;font-size:13px;line-height:1.8">${html}</div></body></html>`],{type:'text/html'});
-      const tBlob=new Blob([plain],{type:'text/plain'});
-      await navigator.clipboard.write([new ClipboardItem({'text/html':hBlob,'text/plain':tBlob})]);
-    }catch(e){ta.select();document.execCommand('copy');}
-  } else { ta.select();document.execCommand('copy'); }
-  const ok=document.getElementById('copy-ok');
-  ok.classList.add('show');
-  setTimeout(()=>ok.classList.remove('show'),2000);
+    try{const hBlob=new Blob([`<!DOCTYPE html><html><body><div style="font-family:sans-serif;font-size:13px;line-height:1.8">${html}</div></body></html>`],{type:'text/html'});const tBlob=new Blob([plain],{type:'text/plain'});await navigator.clipboard.write([new ClipboardItem({'text/html':hBlob,'text/plain':tBlob})]);}
+    catch(e){ta.select();document.execCommand('copy');}
+  }else{ta.select();document.execCommand('copy');}
+  const ok=document.getElementById('copy-ok');ok.classList.add('show');setTimeout(()=>ok.classList.remove('show'),2000);
 }
 document.getElementById('export-modal').addEventListener('click',function(e){if(e.target===this)closeExportModal();});
 
-// ══════════════════════════════════════
-// RESET
-// ══════════════════════════════════════
-function resetToImport(){ document.getElementById('confirm-reset-modal').classList.add('open'); }
-function closeConfirmReset(){ document.getElementById('confirm-reset-modal').classList.remove('open'); }
-function exportThenReset(){ exportJSON(); closeConfirmReset(); doReset(); }
-function confirmReset(){ closeConfirmReset(); doReset(); }
-function doReset(){
-  localStorage.removeItem(STORAGE_KEY);
-  state={jobTitle:'',clientName:'',location:'',companies:[]};
-  columns=[
-    {seg:'Direct',title:'Concurrence Directe',desc:'Même secteur, profils identiques à la cible.'},
-    {seg:'Connexe',title:'Secteurs Connexes',desc:'Compétences transférables, contexte proche.'},
-    {seg:'Ouverture',title:'Ouverture',desc:'Forte culture commerciale, profils adaptables.'},
-  ];
-  npcList=[];idCtr=0;dragCardId=null;undoStack=[];
-  document.getElementById('btn-undo').disabled=true;
-  document.getElementById('app-screen').style.display='none';
-  document.body.classList.remove('app-open');
-  document.getElementById('import-screen').style.display='flex';
-  document.getElementById('json-input').value='';
-  document.getElementById('kanban-board').innerHTML='';
-}
-
-// ══════════════════════════════════════
-// LOCAL STORAGE
-// ══════════════════════════════════════
-const STORAGE_KEY='uptoo_plan_chasse_v2';
-
+const STORAGE_KEY='uptoo_plan_chasse';
 function saveLocal(){
   try{
-    const colTitles={},colDescs={};
-    columns.forEach(c=>{
-      const tEl=document.getElementById('title-'+c.seg);
-      const dEl=document.getElementById('desc-'+c.seg);
-      colTitles[c.seg]=tEl?tEl.textContent.trim():c.title;
-      colDescs[c.seg]=dEl?dEl.textContent.trim():c.desc;
-    });
-    localStorage.setItem(STORAGE_KEY,JSON.stringify({
-      state,columns,npcList,idCtr,lang,colTitles,colDescs,savedAt:new Date().toISOString()
-    }));
+    const colTitles={Direct:document.getElementById('title-Direct')?.textContent.trim()||'Concurrence Directe',Connexe:document.getElementById('title-Connexe')?.textContent.trim()||'Secteurs Connexes',Ouverture:document.getElementById('title-Ouverture')?.textContent.trim()||'Ouverture'};
+    const colDescs={Direct:document.getElementById('desc-Direct')?.textContent.trim()||'',Connexe:document.getElementById('desc-Connexe')?.textContent.trim()||'',Ouverture:document.getElementById('desc-Ouverture')?.textContent.trim()||''};
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({state,npcList,idCtr,colTitles,colDescs,savedAt:new Date().toISOString()}));
     showSaveIndicator();
   }catch(e){}
 }
-
 function showSaveIndicator(){
-  const el=document.getElementById('save-indicator');
-  if(!el)return;
-  el.classList.add('show');
-  clearTimeout(window._saveTimer);
-  window._saveTimer=setTimeout(()=>el.classList.remove('show'),2000);
+  const el=document.getElementById('save-indicator');if(!el)return;
+  el.classList.add('show');clearTimeout(window._saveTimer);window._saveTimer=setTimeout(()=>el.classList.remove('show'),2000);
 }
-
 function checkRestore(){
   try{
-    const raw=localStorage.getItem(STORAGE_KEY);
-    if(!raw)return;
-    const data=JSON.parse(raw);
-    if(!data.state?.companies?.length)return;
-    const banner=document.getElementById('restore-banner');
-    const dateEl=document.getElementById('restore-date');
-    if(data.savedAt){
-      const d=new Date(data.savedAt);
-      dateEl.textContent='— '+d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-    }
+    const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;
+    const data=JSON.parse(raw);if(!data.state?.companies?.length)return;
+    const banner=document.getElementById('restore-banner');const dateEl=document.getElementById('restore-date');
+    if(data.savedAt){const d=new Date(data.savedAt);dateEl.textContent='Dernière modification : '+d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});}
     banner.classList.add('show');
   }catch(e){}
 }
-
 function restoreSession(){
   try{
-    const raw=localStorage.getItem(STORAGE_KEY);
-    if(!raw)return;
+    const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;
     const data=JSON.parse(raw);
-    state=data.state;
-    columns=data.columns||[
-      {seg:'Direct',title:'Concurrence Directe',desc:'Même secteur, profils identiques à la cible.'},
-      {seg:'Connexe',title:'Secteurs Connexes',desc:'Compétences transférables, contexte proche.'},
-      {seg:'Ouverture',title:'Ouverture',desc:'Forte culture commerciale, profils adaptables.'},
-    ];
-    npcList=data.npcList||[];
-    idCtr=data.idCtr||0;
-    if(data.lang) lang=data.lang;
-    document.getElementById('lang-track').classList.toggle('on',lang==='en');
+    state=data.state;npcList=data.npcList||[];idCtr=data.idCtr||0;
     document.getElementById('restore-banner').classList.remove('show');
     showApp();
-    columns.forEach(c=>{
-      const tEl=document.getElementById('title-'+c.seg);
-      const dEl=document.getElementById('desc-'+c.seg);
-      if(tEl&&data.colTitles?.[c.seg]) tEl.textContent=data.colTitles[c.seg];
-      if(dEl&&data.colDescs?.[c.seg])  dEl.textContent=data.colDescs[c.seg];
-    });
+    if(data.colTitles){['Direct','Connexe','Ouverture'].forEach(seg=>{const t=document.getElementById('title-'+seg);const d=document.getElementById('desc-'+seg);if(t&&data.colTitles[seg])t.textContent=data.colTitles[seg];if(d&&data.colDescs?.[seg])d.textContent=data.colDescs[seg];});}
     renderNpc();
-    applyI18N();
   }catch(e){}
 }
+function discardSession(){localStorage.removeItem(STORAGE_KEY);document.getElementById('restore-banner').classList.remove('show');}
 
-function discardSession(){
-  localStorage.removeItem(STORAGE_KEY);
-  document.getElementById('restore-banner').classList.remove('show');
-}
-
-// ══════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ══════════════════════════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') closeModal();
-  if((e.ctrlKey||e.metaKey)&&e.key==='z'&&!e.shiftKey){
-    e.preventDefault();
-    undo();
-  }
-  if(e.key==='Enter'&&e.target.hasAttribute('contenteditable')){
-    e.preventDefault();
-    e.target.blur();
-    // push undo for text edits on blur
-  }
+  if(e.key==='Escape')closeModal();
+  if(e.key==='Enter'&&e.target.hasAttribute('contenteditable')){e.preventDefault();e.target.blur();saveLocal();}
 });
-
-// Track text edits in contenteditable: push undo snapshot on focusin (before edit)
-let _cePendingUndo = false;
-document.addEventListener('focusin',e=>{
-  if(e.target.hasAttribute('contenteditable')){
-    // Push undo snapshot BEFORE the user types
-    _cePendingUndo = true;
-    pushUndo();
-  }
-});
-document.addEventListener('focusout',e=>{
-  if(e.target.hasAttribute('contenteditable')){
-    if(!_cePendingUndo){
-      // nothing was pushed, push now
-    }
-    _cePendingUndo = false;
-    saveLocal();
-  }
-});
-
-// ══════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════
-function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-// ── INIT ──
 checkRestore();
-applyI18N();
 </script>
 </body>
 </html>
